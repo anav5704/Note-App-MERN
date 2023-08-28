@@ -1,10 +1,13 @@
+dotenv.config()
 import express from "express"
 import mongoose from "mongoose"
 import cors from "cors"
 import dotenv from "dotenv"
 
-dotenv.config()
 const app = express()
+
+const PORT = process.env.PORT
+const URI = process.env.MONGO
 
 app.use(cors())
 app.use(express.json())
@@ -17,9 +20,9 @@ function listener(req, res, next){
 
 async function Start(){
     try {   
-        mongoose.connect(process.env.MONGO)
-        app.listen(process.env.PORT, () => {
-            console.log(`Server started on port ${process.env.PORT}`)
+        mongoose.connect(URI)
+        app.listen(PORT, () => {
+            console.log(`Server started on port ${PORT}`)
         })
     }
     catch(err){
