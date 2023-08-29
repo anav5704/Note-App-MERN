@@ -1,9 +1,12 @@
 import express from "express"
+import {signup} from "../controllers/user.js"
 
 const userRoutes = express.Router()
 
-userRoutes.get("/", (req, res) => {
-    res.status(200).json({message: "Got all users"})
+userRoutes.post("/signup", signup)
+
+userRoutes.post("/login", async (req, res) => {
+    res.status(200).json({message: "User logged in"})
 })
 
 userRoutes.route("/:id")
@@ -15,11 +18,6 @@ userRoutes.route("/:id")
 .delete((req, res) => {
     const id = req.params.id
     res.status(200).json({message: `Deleted user with id ${id}`})
-})
-
-.put((req, res) => {
-    const id = req.params.id
-    res.status(200).json({message: `Updated user with id ${id}`})
 })
 
 export default userRoutes
