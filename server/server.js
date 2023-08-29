@@ -3,6 +3,8 @@ import express from "express"
 import mongoose from "mongoose"
 import cors from "cors"
 import dotenv from "dotenv"
+import noteRoutes from "./routes/note.js"
+import userRoutes from "./routes/user.js"
 
 const app = express()
 
@@ -12,6 +14,9 @@ const URI = process.env.MONGO
 app.use(cors())
 app.use(express.json())
 app.use(listener)
+
+app.use("/api/notes", noteRoutes)
+app.use("/api/users", userRoutes)
 
 function listener(req, res, next){
     console.log(req.method, req.path)
