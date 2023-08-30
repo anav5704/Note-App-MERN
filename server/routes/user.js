@@ -1,13 +1,11 @@
 import express from "express"
-import {signup} from "../controllers/user.js"
+import {signup, login} from "../controllers/user.js"
 
 const userRoutes = express.Router()
 
 userRoutes.post("/signup", signup)
 
-userRoutes.post("/login", async (req, res) => {
-    res.status(200).json({message: "User logged in"})
-})
+userRoutes.post("/login", login)
 
 userRoutes.route("/:id")
 .get((req, res) => {

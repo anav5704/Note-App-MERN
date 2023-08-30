@@ -8,9 +8,6 @@ import userRoutes from "./routes/user.js"
 
 const app = express()
 
-const PORT = process.env.PORT
-const URI = process.env.MONGO
-
 app.use(cors())
 app.use(express.json())
 app.use(listener)
@@ -25,9 +22,9 @@ function listener(req, res, next){
 
 async function Start(){
     try {   
-        mongoose.connect(URI)
-        app.listen(PORT, () => {
-            console.log(`Server started on port ${PORT}`)
+        mongoose.connect(process.env.MONGO)
+        app.listen(process.env.PORT, () => {
+            console.log(`Server started on port ${process.env.PORT}`)
         })
     }
     catch(err){
