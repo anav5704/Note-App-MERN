@@ -1,20 +1,26 @@
 import { Input, PasswordInput, Button, Text, Title, Stack} from '@mantine/core';
 import { IconEyeCheck, IconEyeOff } from '@tabler/icons-react';
 import { useState } from 'react';
+import axios from "axios"
 
 function Signup() {
   const [ loading, setLoading] = useState(false)
   const [ email, setEmail] = useState("")
   const [ password, setPassword] = useState("")
 
-  const handdleSignup = () => {
+  const handleLogin = async (e) => {
+    e.preventDefault()
     setLoading(true)
-    console.log(email, password)
-    setTimeout(() => {
-      setLoading(false)
+    try{
+      await axios.post("http://localhost:4000/api/users/login", {email, password})
+      alert("Registered!")
       setEmail("")
       setPassword("")
-    }, 2500)
+      setLoading(false)
+    }
+    catch(err){
+      console.log("Frontend loging error", err)
+    }
   }
 
   return (
@@ -41,7 +47,7 @@ function Signup() {
           reveal ? <IconEyeOff size={size} /> : <IconEyeCheck size={size} />
         }
       />
-      <Button onClick={handdleSignup} fullWidth size='md' loading={loading}>
+      <Button onClick={handleLogin} fullWidth size='md' loading={loading}>
         Log In
       </Button>
     </Stack>
