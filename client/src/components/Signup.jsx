@@ -13,13 +13,16 @@ function Signup() {
     e.preventDefault()
     setLoading(true)
 
-    
-    const response =await axios.post("http://localhost:4000/api/users/signup", {email, password})
-    const data = response.json()
-    console.log(response)
+    try{
+      const response =await axios.post("http://localhost:4000/api/users/signup", {email, password})
+      const data = response.json()
       setEmail("")
       setPassword("")
       setLoading(false)
+    }
+    catch(err){
+      console.log("broken ass user auth 🤡", err)
+    }
 
       
   }

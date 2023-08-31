@@ -12,6 +12,7 @@ async function signup (req, res){
     const warnings = []
     try{
         if(!email || !password){
+            warnings.push("email")
             throw Error("Missing email or password")
         }
 
