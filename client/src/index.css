@@ -5,9 +5,36 @@ body {
   justify-content: center;
   min-width: 100vw;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .link {
   text-decoration: none;
   color: #4DABF7;
+}
+
+.page {
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  display: none;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  display: none;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+
 }

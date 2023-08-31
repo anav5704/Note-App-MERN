@@ -1,7 +1,7 @@
 import { Input, PasswordInput, Button , Text, Title, Stack} from '@mantine/core';
 import { IconEyeCheck, IconEyeOff, IconX, IconCheck } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import { useState } from 'react';
 import axios from "axios"
 
@@ -9,6 +9,7 @@ function Signup() {
   const [ loading, setLoading] = useState(false)
   const [ email, setEmail] = useState("")
   const [ password, setPassword] = useState("")
+  const navitage = useNavigate()
 
   const handleSignup = async (e) => {
     e.preventDefault()
@@ -16,6 +17,7 @@ function Signup() {
     try{
       await axios.post("http://localhost:4000/api/users/signup", {email, password})
       notifications.show({
+        withBorder: true,
         title: 'Congratulations!',
         message: 'You were successfuly registered',
         autoClose: 2500,
@@ -23,9 +25,11 @@ function Signup() {
         color: 'green',
        })
       setLoading(false)
+      navitage("/home")
     }
     catch(err){
       notifications.show({
+        withBorder: true,
         title: 'Oops!, something went wrong',
         message: err.response.data,
         autoClose: 2500,
