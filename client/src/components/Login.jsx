@@ -1,5 +1,7 @@
-import { Input, PasswordInput, Button, Text, Title, Stack} from '@mantine/core';
-import { IconEyeCheck, IconEyeOff } from '@tabler/icons-react';
+import { Input, PasswordInput, Button , Text, Title, Stack} from '@mantine/core';
+import { IconEyeCheck, IconEyeOff, IconX, IconCheck } from '@tabler/icons-react';
+import { notifications } from '@mantine/notifications';
+import {Link} from "react-router-dom"
 import { useState } from 'react';
 import axios from "axios"
 
@@ -13,18 +15,30 @@ function Signup() {
     setLoading(true)
     try{
       await axios.post("http://localhost:4000/api/users/login", {email, password})
-      alert("Registered!")
-      setEmail("")
-      setPassword("")
+      notifications.show({
+        title: 'Welcome back!',
+        message: 'You were successfuly logged in',
+        autoClose: 2500,
+        icon: <IconCheck />,
+        color: 'green',
+       })
       setLoading(false)
     }
     catch(err){
-      console.log("Frontend loging error", err)
-    }
+      notifications.show({
+        title: 'Oops!, something went wrong',
+        message: err.response.data,
+        autoClose: 2500,
+        icon: <IconX />,
+        color: 'red',
+       })
+      console.log(err.response.data)
+      setLoading(false)
+    } 
   }
 
   return (
-
+    <>
     <Stack spacing="lg" w={300} >
       <Title align='center'>
         <Text >
@@ -51,6 +65,8 @@ function Signup() {
         Log In
       </Button>
     </Stack>
+    <Text mt={15} align='center'>Don't have an account? <Link className='link' to="/signup">Sign Up</Link></Text>
+    </>
   );
 }
 
