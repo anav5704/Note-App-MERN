@@ -3,42 +3,17 @@ import { IconEyeCheck, IconEyeOff, IconX, IconCheck } from '@tabler/icons-react'
 import { notifications } from '@mantine/notifications';
 import {Link, useNavigate} from "react-router-dom"
 import { useState } from 'react';
+import useSignup from '../hooks/useSignup';
 import axios from "axios"
 
 function Signup() {
-  const [ loading, setLoading] = useState(false)
-  const [ email, setEmail] = useState("")
+   const [ email, setEmail] = useState("")
   const [ password, setPassword] = useState("")
-  const navitage = useNavigate()
-
+  const  {signup, loading} = useSignup()
+  
   const handleSignup = async (e) => {
     e.preventDefault()
-    setLoading(true)
-    try{
-      await axios.post("http://localhost:4000/api/users/signup", {email, password})
-      notifications.show({
-        withBorder: true,
-        title: 'Congratulations!',
-        message: 'You were successfuly registered',
-        autoClose: 2500,
-        icon: <IconCheck />,
-        color: 'green',
-       })
-      setLoading(false)
-      navitage("/home")
-    }
-    catch(err){
-      notifications.show({
-        withBorder: true,
-        title: 'Oops!, something went wrong',
-        message: err.response.data,
-        autoClose: 2500,
-        icon: <IconX />,
-        color: 'red',
-       })
-      console.log(err.response.data)
-      setLoading(false)
-    } 
+    await signup(email, password)
   }
 
   return (

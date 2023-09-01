@@ -1,44 +1,18 @@
 import { Input, PasswordInput, Button , Text, Title, Stack} from '@mantine/core';
-import { IconEyeCheck, IconEyeOff, IconX, IconCheck } from '@tabler/icons-react';
-import { notifications } from '@mantine/notifications';
-import {Link, useNavigate} from "react-router-dom"
+import { IconEyeCheck, IconEyeOff } from '@tabler/icons-react';
+ import {Link} from "react-router-dom"
 import { useState } from 'react';
-import axios from "axios"
+import useLogin from '../hooks/useLogin';
 
 function Signup() {
-  const [ loading, setLoading] = useState(false)
   const [ email, setEmail] = useState("")
   const [ password, setPassword] = useState("")
-  const navitage = useNavigate()
+  const {login, loading} = useLogin()
 
   const handleLogin = async (e) => {
     e.preventDefault()
-    setLoading(true)
-    try{
-      await axios.post("http://localhost:4000/api/users/login", {email, password})
-      notifications.show({
-        withBorder: true,
-        title: 'Welcome back!',
-        message: 'You were successfuly logged in',
-        autoClose: 2500,
-        icon: <IconCheck />,
-        color: 'green',
-       })
-      setLoading(false)
-      navitage("/home")
-    }
-    catch(err){
-      notifications.show({
-        withBorder: true,
-        title: 'Oops!, something went wrong',
-        message: err.response.data,
-        autoClose: 2500,
-        icon: <IconX />,
-        color: 'red',
-       })
-      console.log(err.response.data)
-      setLoading(false)
-    } 
+    await login(email, password)
+
   }
 
   return (

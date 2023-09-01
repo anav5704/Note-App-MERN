@@ -5,7 +5,7 @@ import Hero from "./components/Hero"
 import Signup from "./components/Signup"
 import Login from "./components/Login"
 import Home from "./pages/Home"
- 
+  
 function App() {
   return (
       <>
