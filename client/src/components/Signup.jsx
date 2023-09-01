@@ -1,11 +1,9 @@
 import { Input, PasswordInput, Button , Text, Title, Stack} from '@mantine/core';
 import { IconEyeCheck, IconEyeOff, IconX, IconCheck } from '@tabler/icons-react';
-import { notifications } from '@mantine/notifications';
-import {Link, useNavigate} from "react-router-dom"
+ import {Link} from "react-router-dom"
 import { useState } from 'react';
 import useSignup from '../hooks/useSignup';
-import axios from "axios"
-
+ 
 function Signup() {
    const [ email, setEmail] = useState("")
   const [ password, setPassword] = useState("")
@@ -32,7 +30,7 @@ function Signup() {
       />
       <PasswordInput
         size='md'
-        placeholder="Password"
+        placeholder="New password"
         value={password}
         onChange={(e) => {setPassword(e.target.value)}}
         // defaultValue="secret"

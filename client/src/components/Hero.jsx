@@ -1,5 +1,5 @@
 import {Link} from "react-router-dom"
-import { createStyles, Title, Text, Button, Container, rem } from '@mantine/core';
+import { createStyles, Title, Text, Button, Container, rem, Avatar, Tooltip, Center  } from '@mantine/core';
 // import { Dots } from './Dots';
 
 const useStyles = createStyles((theme) => ({
@@ -124,9 +124,43 @@ function Hero() {
               Log In
             </Button>
           </Link>
+          
         </Container>
       </div>
+      <Center maw={400} h={100} mx="auto">
+      <Tooltip.Group openDelay={300} closeDelay={100} >
+        <Avatar.Group spacing="sm" >
+          <Tooltip label="Tuna" withArrow color="gray" position="bottom">
+            <Avatar src="/images/sake.jpg" radius="xl" />
+          </Tooltip>
+          <Tooltip label="Baddie w Booty" withArrow color="gray" position="bottom">
+            <Avatar src="/images/rohan.jpg" radius="xl" />
+          </Tooltip>
+          <Tooltip label="Deaf" withArrow color="gray" position="bottom">
+            <Avatar src="images/veer.jpg" radius="xl" />
+          </Tooltip>
+          <Tooltip label="Blind" withArrow color="gray" position="bottom">
+            <Avatar src="/images/anav.jpg" radius="xl" />
+          </Tooltip>
+          <Tooltip label="Kundi" withArrow color="gray" position="bottom">
+            <Avatar src="images/indee.jpg" radius="xl" />
+          </Tooltip>
+          <Tooltip
+            withArrow color="gray" position="bottom"
+            label={
+              <>
+                <div>Soni, Dan,</div>
+                <div>Vet, Rud, Aaryan</div>
+              </>
+            }
+          >
+            <Avatar radius="xl">+5</Avatar>
+          </Tooltip>
+        </Avatar.Group>
+      </Tooltip.Group>
+      </Center>
     </Container>
+    
   );
 }
 
