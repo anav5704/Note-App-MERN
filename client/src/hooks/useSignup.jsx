@@ -1,19 +1,20 @@
 import { IconX, IconCheck } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
 import { useState } from "react"
-import {useNavigate} from "react-router-dom"
+import useAuthContest from "./useAuthContext"
 import axios from "axios"
 
 function useSignup(){
     const [ loading, setLoading] = useState(false)
-     const navitage = useNavigate()
-
+    const {dispatch} = useAuthContest()
+    
     const signup = async (email, password) => {
         setLoading(true)
         try{
             const response = await axios.post("http://localhost:4000/api/users/signup", {email, password})
             const json = await response.data
             localStorage.setItem("user", JSON.stringify(json))
+            dispatch({type: "LOGIN", payload: json})
             notifications.show({
               withBorder: true,
               title: 'Congratulations!',
@@ -23,7 +24,6 @@ function useSignup(){
               color: 'green',
              })
             setLoading(false)
-            navitage("/home")
           }
           catch(err){
             notifications.show({

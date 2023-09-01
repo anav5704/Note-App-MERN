@@ -1,6 +1,7 @@
 import {Menu,createStyles,Header,HoverCard,Group,Button,UnstyledButton,Text,SimpleGrid,ThemeIcon,Anchor,Divider,Center,Box,Burger,Drawer,Collapse,ScrollArea,rem,} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import {IconSettings, IconSearch, IconPhoto, IconMessageCircle, IconTrash, IconArrowsLeftRight , IconNotification,IconCode,IconBook,IconChartPie3,IconFingerprint,IconCoin,IconChevronDown,} from '@tabler/icons-react';
+import useLogout from "../hooks/useLogout"
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -99,6 +100,11 @@ function Nav() {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
   const { classes, theme } = useStyles();
+  const {logout} = useLogout()
+
+  const handleLogout = () => {
+    logout()
+  }
 
   const links = mockdata.map((item) => (
     <UnstyledButton className={classes.subLink} key={item.title}>
@@ -156,7 +162,7 @@ function Nav() {
         <Menu.Item color="red" icon={<IconTrash size={14} />}>Delete my account</Menu.Item>
       </Menu.Dropdown>
     </Menu>
-            <Button>Log Out</Button>
+            <Button onClick={handleLogout}>Log Out</Button>
           </Group>
 
           <Burger opened={drawerOpened} onClick={toggleDrawer} className={classes.hiddenDesktop} />

@@ -9,7 +9,8 @@ async function signup (req, res){
     const {email, password} = req.body
     try{
        const user = await userModel.signup(email, password)
-        res.status(200).json({message: "User registered successfully", user})
+       const token = createToken(user._id)
+        res.status(200).json({message: "User registered successfully", user, token})
     }
     catch(err){
         res.status(400).json(err.message)
