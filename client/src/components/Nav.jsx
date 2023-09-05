@@ -3,7 +3,8 @@ import { ActionIcon, useMantineColorScheme } from '@mantine/core';
 import { Navbar, Center, Tooltip, UnstyledButton, createStyles, Stack, rem, px } from '@mantine/core';
 import {IconHome2,IconMoon,IconFilePlus ,IconLogout, IconSunHigh, IconSunglasses } from '@tabler/icons-react';
 import useLogout from "../hooks/useLogout"
-  
+import {Link} from "react-router-dom"
+
 const useStyles = createStyles((theme) => ({
   link: {
     width: rem(50),
@@ -39,20 +40,22 @@ function NavbarLink({ icon: Icon, label, active, onClick }) {
 }
 
 const mockdata = [
-  { icon: IconHome2, label: 'Home' },
-  { icon: IconFilePlus , label: 'Add Note' },
+  { icon: IconHome2, label: 'Home', route: "/home" },
+  { icon: IconFilePlus , label: 'Add Note', route: "/create" },
 ];
 
 export function Nav() {
   const [active, setActive] = useState(0);
 
   const links = mockdata.map((link, index) => (
-    <NavbarLink
-      {...link}
-      key={link.label}
-      active={index === active}
-      onClick={() => setActive(index)}
-    />
+    <Link to={link.route}>
+        <NavbarLink
+        {...link}
+        key={link.label}
+        active={index === active}
+        onClick={() => setActive(index)}
+      />
+    </Link>
   ));
 
   const { logout } = useLogout()

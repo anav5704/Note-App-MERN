@@ -2,8 +2,8 @@ import Nav from "../components/Nav";
 
 function Home() {
   return (
-    <div className="page">
-        <Nav />
+    <div>
+        Home Page 🏘️
     </div>
   );
 }
