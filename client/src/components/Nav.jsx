@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import { ActionIcon, useMantineColorScheme } from '@mantine/core';
 import { Navbar, Center, Tooltip, UnstyledButton, createStyles, Stack, rem, px } from '@mantine/core';
-import {IconHome2,IconGauge,IconDeviceDesktopAnalytics,IconFingerprint,IconCalendarStats,IconUser,IconSettings,IconLogout,IconSwitchHorizontal,} from '@tabler/icons-react';
+import {IconHome2,IconMoon,IconFilePlus ,IconLogout, IconSunHigh, IconSunglasses } from '@tabler/icons-react';
 import useLogout from "../hooks/useLogout"
-
+  
 const useStyles = createStyles((theme) => ({
   link: {
     width: rem(50),
@@ -11,17 +12,17 @@ const useStyles = createStyles((theme) => ({
     display: 'flex',  
     alignItems: 'center',
     justifyContent: 'center',
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
+    color: theme.colors.dark[0],
 
     '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.blue[5] : theme.colors.gray[0],
+      backgroundColor: theme.colors.blue[5],
     },
   },
 
   active: {
     '&, &:hover': {
       backgroundColor: theme.colors.blue[5],
-      color: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).color,
+      color: theme.colors.dark[0],
     },
   },
 }));
@@ -39,9 +40,7 @@ function NavbarLink({ icon: Icon, label, active, onClick }) {
 
 const mockdata = [
   { icon: IconHome2, label: 'Home' },
-  { icon: IconUser, label: 'Account' },
-  { icon: IconFingerprint, label: 'Security' },
-  { icon: IconSettings, label: 'Settings' },
+  { icon: IconFilePlus , label: 'Add Note' },
 ];
 
 export function Nav() {
@@ -62,6 +61,9 @@ export function Nav() {
     logout()
   }
 
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const dark = colorScheme === 'dark';
+
   return (
     <Navbar height={"100vh"}  width={{ base: 80 }} p="md" sx={(theme) => ({
       backgroundColor: theme.fn.variant({ variant: 'filled', color: theme.primaryColor })
@@ -77,7 +79,7 @@ export function Nav() {
       </Navbar.Section>
       <Navbar.Section>
         <Stack justify="center" spacing={10}>
-          <NavbarLink icon={IconSwitchHorizontal} label="Change account" />
+          <NavbarLink onClick={() => toggleColorScheme()} icon={  dark ? IconMoon : IconSunHigh } label="Toggle Theme" />
           <NavbarLink icon={IconLogout} label="Logout" onClick={handleSumbit}/>
         </Stack>
       </Navbar.Section>
