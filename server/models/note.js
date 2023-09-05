@@ -5,18 +5,22 @@ const noteSchema = new mongoose.Schema({
         type: String, 
         required: true, 
     },
+    tags: {
+        type: Array,
+        required: true, 
+    },
     content: {
         type: Object,
         required: true, 
     },
-    owner: {
-        type: String, 
-        required: true, 
+    // owner: {
+    //     type: String, 
+    //     required: true, 
 
-    },
+    // },
 }, {timestamps: true})
 
-export const noteModel = mongoose.model("User", noteSchema )
+export const noteModel = mongoose.model("Note", noteSchema )
 
 
 
