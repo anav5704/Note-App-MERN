@@ -8,26 +8,26 @@ async function getAllNotes(req, res){
         res.status(200).json(notes)
     }
     catch(err){
-        req.status(400).json(err.message)
+        res.status(400).json(err.message)
     }
 }
 
 async function getOneNote(req, res){
     try{
         const {id} = await req.params
-        if(mongoose.Types.ObjectId.isValid({_id : id})) {
-            return req.status(404).json({error: "Document Does not exits"})
+        if(!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(404).json({error: "Document Does not exist"})
         }
 
         const note = await noteModel.findById(id)
         if (!note){
-            return req.status(400).json({error: "No Such Document"})
+            return res.status(400).json({error: "No Such Document"})
         }
 
         res.status(200).json(note)
     }
     catch(err){
-        req.status(400).json(err.message)
+        res.status(400).json(err.message)
     }
 }
 
@@ -49,7 +49,7 @@ async function createNote(req, res){
         res.status(200).json(note)
     }
     catch(err){
-        req.status(400).json(err.message)
+        res.status(400).json(err.message)
     }
 }
 
@@ -57,7 +57,7 @@ async function deleteNote(req, res){
     try{
         const {id} = await req.params
         if(!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(404).json({error: "Document Does not exits"})
+            return res.status(404).json({error: "Document Does not exist"})
         }
 
         const note = noteModel.findByIdAndDelete({_id: id})
@@ -68,18 +68,21 @@ async function deleteNote(req, res){
         res.status(200).json(note)
     }
     catch(err){
-        req.status(400).json(err.message)
+        res.status(400).json(err.message)
     }
 }
 
 async function updateNote(req, res){
     try{
         const {id} = await req.params
-        if(!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(404).json({error: "Document Does not exits"})
+        const {title, tags, content} = req.body
+
+         if(!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(404).json({error: "Document Does not exist"})
         }
 
-        const note = noteModel.findByIdAndUpdate({_id: id}, {...req.body})
+        const note = await noteModel.findByIdAndUpdate({_id: id},  {title, tags, content})
+
         if(!note){
             return res.status(400).json({error: "No Such Document"})
         }
@@ -87,7 +90,7 @@ async function updateNote(req, res){
         res.status(200).json(note)
     }
     catch(err){
-        req.status(400).json(err.message)
+        res.status(400).json(err.message)
     }
 }
 

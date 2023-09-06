@@ -7,6 +7,7 @@ import Signup from "./components/Signup"
 import Login from "./components/Login"
 import Home from "./pages/Home"
 import Create from './pages/Create'
+import Update from "./pages/Update"
 import useAuthContext from './hooks/useAuthContext'
    
 function App() {
@@ -22,6 +23,7 @@ function App() {
                 <Route element={<Base />}>
                   <Route path="/home" element={ user ? <Home /> : <Navigate to="/" /> } />
                   <Route path="/create" element={ user ? <Create /> : <Navigate to="/" /> } />
+                  <Route path="/notes/:id" element={ <Update /> } />
                 </Route>
                 <Route path="*" element={ <PageNotFound /> } />
             </Routes>

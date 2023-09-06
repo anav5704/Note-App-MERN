@@ -13,6 +13,11 @@ body {
   color: #4DABF7;
 }
 
+a {
+  all: unset;
+  cursor: pointer;
+}
+
 .page {
   min-width: 100vw;
   min-height: 100vh;

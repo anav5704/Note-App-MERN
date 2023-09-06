@@ -8,15 +8,17 @@ import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
 import useNoteContext from "../hooks/useNoteContext"
 import useAuthContext from "../hooks/useAuthContext"
+import {useParams} from "react-router-dom"
 import axios from 'axios';
-
-const Create = () => {
+ 
+const Update = () => {
   const {user} = useAuthContext()
+  const {id} = useParams()
 
   const [title, setTitle] = useState("")
-  const [tags, setTags]= useState(null)
-  const [content, setConetent] = useState(null)
-  const [loading, setLoading] = useState(false)
+  const [tags, setTags]= useState([])
+  const [content, setConetent] = useState("")
+   const [loading, setLoading] = useState(false)
 
 
   const [data, setData]= useState([
@@ -32,38 +34,61 @@ const Create = () => {
           Highlight,
           TextAlign.configure({ types: ['heading', 'paragraph'] }),
         ],
-        content,
+        content ,
   });
 
   async function handleSubmit(e) {
     e.preventDefault()
     setLoading(true)
-
     if(!user){
       alert("Not logged in")
     }
     
-    try{
+  try{
     const config  = {
       headers: {
         "Content-Type": "application/json",
         "Authorization" : `Bearer: ${user.token}`
       }
-    }   
-    
- 
+    }
 
-    const response = await axios.post("http://localhost:4000/api/notes/create", {title, tags, content}, config )
+    const response = await axios.put(`http://localhost:4000/api/notes/${id}`, {title, tags, content}, config )
     const json = await response.data
     console.log(json)
     setLoading(false)
    }
   catch(err){
-    console.log("Note creation error", err.response.data)
+    console.log("Note update error", err.response)
     setLoading(false)
 
   }
 }
+
+async function fetchNote(){
+  try{
+    const config  = {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization" : `Bearer: ${user.token}`
+      }
+    }
+
+    const response = await axios.get(`http://localhost:4000/api/notes/${id}`, config )
+    const json = await response.data
+    console.log(json)
+    setTitle(json.title)
+    setTags(json.tags)
+    setConetent(json.content)
+  }
+  catch(err){
+    console.log("Note fetch error", err.response)
+ 
+  }
+}
+
+useEffect(() => {
+  fetchNote()
+}, [id])
 
    return (
     <div>
@@ -75,10 +100,11 @@ const Create = () => {
         />
        <MultiSelect
          data={data}
+         value={tags}
         placeholder="Note Tags"
         searchable
         creatable
-        getCreateLabel={(query) => `+ Create ${query}`}
+        getCreateLabel={(query) => `+ Update ${query}`}
         onCreate={(query) => {
             const item = { value: query, label: query };
             setData((current) => [...current, item]);
@@ -86,8 +112,8 @@ const Create = () => {
         }}
         onChange={(e) => setTags(e)}
         />
-            <RichTextEditor  editor={editor} >
-            <RichTextEditor.Toolbar sticky stickyOffset={60} onClick={() => setConetent( editor.getHTML())}>
+            <RichTextEditor  editor={editor}>
+            <RichTextEditor.Toolbar sticky stickyOffset={60} onClick={() => setConetent( editor.getHTML()) }>
                 <RichTextEditor.ControlsGroup>
                 <RichTextEditor.Bold />
                 <RichTextEditor.Italic />
@@ -123,11 +149,11 @@ const Create = () => {
                 </RichTextEditor.ControlsGroup>
             </RichTextEditor.Toolbar>
 
-            <RichTextEditor.Content onInput={() => setConetent(editor.getHTML())}/>
+            <RichTextEditor.Content  onInput={() => setConetent(editor.getHTML())}/>
         </RichTextEditor>
-        <Button loading={loading} type='submit' onClick={handleSubmit}  w={"100%"}>Create Note</Button>
+        <Button loading={loading} type='submit' onClick={handleSubmit}  w={"100%"}>Update Note</Button>
     </div>
   )
 }
 
-export default Create
+export default Update
