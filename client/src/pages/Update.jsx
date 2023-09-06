@@ -10,15 +10,17 @@ import useNoteContext from "../hooks/useNoteContext"
 import useAuthContext from "../hooks/useAuthContext"
 import {useParams} from "react-router-dom"
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
  
 const Update = () => {
+  const navigate = useNavigate()
   const {user} = useAuthContext()
   const {id} = useParams()
 
   const [title, setTitle] = useState("")
   const [tags, setTags]= useState([])
   const [content, setConetent] = useState("")
-   const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
 
 
   const [data, setData]= useState([
@@ -37,7 +39,7 @@ const Update = () => {
         content ,
   });
 
-  async function handleSubmit(e) {
+  async function handleUpdate(e) {
     e.preventDefault()
     setLoading(true)
     if(!user){
@@ -56,6 +58,34 @@ const Update = () => {
     const json = await response.data
     console.log(json)
     setLoading(false)
+   }
+  catch(err){
+    console.log("Note update error", err.response)
+    setLoading(false)
+
+  }
+}
+
+  async function handleDelete(e) {
+    e.preventDefault()
+    setLoading(true)
+    if(!user){
+      alert("Not logged in")
+    }
+    
+  try{
+    const config  = {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization" : `Bearer: ${user.token}`
+      }
+    }
+
+    const response = await axios.delete(`http://localhost:4000/api/notes/${id}`, config )
+    const json = await response.data
+    console.log(json)
+    setLoading(false)
+    navigate("/home")
    }
   catch(err){
     console.log("Note update error", err.response)
@@ -88,7 +118,7 @@ async function fetchNote(){
 
 useEffect(() => {
   fetchNote()
-}, [id])
+}, [])
 
    return (
     <div>
@@ -151,7 +181,8 @@ useEffect(() => {
 
             <RichTextEditor.Content  onInput={() => setConetent(editor.getHTML())}/>
         </RichTextEditor>
-        <Button loading={loading} type='submit' onClick={handleSubmit}  w={"100%"}>Update Note</Button>
+        <Button loading={loading} type='submit' onClick={handleUpdate}  w={"50%"}>Update Note</Button>
+        <Button color='red' variant='outline' loading={loading} type='submit' onClick={handleDelete}  w={"50%"}>Delete Note</Button>
     </div>
   )
 }
