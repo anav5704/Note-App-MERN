@@ -60,7 +60,7 @@ async function deleteNote(req, res){
             return res.status(404).json({error: "Document Does not exist"})
         }
 
-        const note = noteModel.findByIdAndDelete({_id: id})
+        const note = await noteModel.findByIdAndDelete({_id: id})
         if(!note){
             return res.status(400).json({error: "No Such Document"})
         }
