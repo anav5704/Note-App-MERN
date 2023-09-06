@@ -3,8 +3,8 @@ import mongoose from "mongoose"
 
 async function getAllNotes(req, res){
     try{
-        // const id = req.user._id
-        const notes = await noteModel.find({}) 
+        const id = req.user._id
+        const notes = await noteModel.find({owner: id}).sort({createdAt: -1})
         res.status(200).json(notes)
     }
     catch(err){
@@ -32,7 +32,7 @@ async function getOneNote(req, res){
 }
 
 async function createNote(req, res){
-    const {title, tags, content} = req.params
+    const {title, tags, content} = req.body
 
     let missing = []
     if(!title) missing.push("Title")
@@ -44,8 +44,8 @@ async function createNote(req, res){
     }
 
     try{
-        // const id = req.user._id
-        const note = await noteModel.create({title, tags, content }) // add "owner: id" to argumets
+        const id = req.user._id
+        const note = await noteModel.create({title, tags, content, owner: id }) 
         res.status(200).json(note)
     }
     catch(err){

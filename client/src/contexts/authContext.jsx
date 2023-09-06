@@ -1,5 +1,4 @@
 import { useEffect, useReducer, createContext } from "react";
-import useSignup from "../hooks/useSignup";
 
 const authContext = createContext()
 
@@ -22,7 +21,7 @@ const AuthContextProvider = ({children}) => {
      useEffect(() => {
         const json = JSON.parse(localStorage.getItem("user"))
         if(json){
-            dispatch({type: "LOGIN", payload: json.user}) 
+            dispatch({type: "LOGIN", payload: json}) 
          }
     }, []) 
 

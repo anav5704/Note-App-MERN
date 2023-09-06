@@ -1,7 +1,9 @@
 import express from "express"
+import requreAuth from "../middleware/requireAuth.js"
 import { getAllNotes, getOneNote, createNote, updateNote, deleteNote } from "../controllers/note.js"
 
 const noteRoutes = express.Router()
+noteRoutes.use(requreAuth)
 
 noteRoutes.get("/", getAllNotes)
 

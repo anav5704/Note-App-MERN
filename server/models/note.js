@@ -13,11 +13,11 @@ const noteSchema = new mongoose.Schema({
         type: Object,
         required: true, 
     },
-    // owner: {
-    //     type: String, 
-    //     required: true, 
+    owner: {
+        type: String, 
+        required: true, 
 
-    // },
+    },
 }, {timestamps: true})
 
 export const noteModel = mongoose.model("Note", noteSchema )

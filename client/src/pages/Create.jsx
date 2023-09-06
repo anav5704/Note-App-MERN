@@ -13,26 +13,16 @@ import axios from 'axios';
 const Create = () => {
   const {user} = useAuthContext()
 
-  const [title, setTitle] = useState("title")
-  const [tags, setTags]= useState(["a" , "b"])
-  const [body, setBody] = useState({name: "anav"})
+  const [title, setTitle] = useState("")
+  const [tags, setTags]= useState([])
+  const [content, setConetent] = useState({})
+  const [loading, setLoading] = useState(false)
 
 
   const [data, setData]= useState([
     { value: 'Study', label: 'Study' },
     { value: 'Movies', label: 'Movies' },
 ])
-
-
-  const content = {
-    "type": "heading",
-    "content": [
-      {
-        "type": "text",
-        "text": "Wow, this editor instance exports its content as JSON."
-      }
-    ]
-  }
 
     const editor = useEditor({
         extensions: [
@@ -47,26 +37,34 @@ const Create = () => {
 
   async function handleSubmit(e) {
     e.preventDefault()
+    setLoading(true)
+    setConetent(JSON.stringify(editor.getJSON()))
 
     if(!user){
-      alert("You are not logged in")
-      return
-  }
-  
-  try{
-    const response = await axios.post("http://localhost:4000/api/notes/create", {title, tags, content})
+      alert("Not logged in")
+    }
+    
+    try{
+    const config  = {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization" : `Bearer: ${user.token}`
+      }
+    }
+
+    const response = await axios.post("http://localhost:4000/api/notes/create", {title, tags, content}, config )
     const json = await response.data
     console.log(json)
-    alert("sumbitted")
-  }
+    setLoading(false)
+   }
   catch(err){
     console.log("Note creation error", err.response.data)
-    alert("an error occured")
-  }
- 
-  }
+    setLoading(false)
 
-  return (
+  }
+}
+
+   return (
     <div>
        <TextInput
         placeholder="Note Heading"
@@ -85,8 +83,9 @@ const Create = () => {
             setData((current) => [...current, item]);
             return item;
         }}
+        onChange={(e) => setTags(e)}
         />
-            <RichTextEditor editor={editor}>
+            <RichTextEditor  editor={editor}>
             <RichTextEditor.Toolbar sticky stickyOffset={60}>
                 <RichTextEditor.ControlsGroup>
                 <RichTextEditor.Bold />
@@ -125,7 +124,7 @@ const Create = () => {
 
             <RichTextEditor.Content/>
         </RichTextEditor>
-        <Button type='submit' onClick={handleSubmit}  w={"100%"}>Create Note</Button>
+        <Button loading={loading} type='submit' onClick={handleSubmit}  w={"100%"}>Create Note</Button>
     </div>
   )
 }
