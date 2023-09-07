@@ -2,12 +2,12 @@ import { Title, SimpleGrid, Container, Loader, Center } from "@mantine/core";
 import Note from "../contexts/Note";
 import axios from "axios";
 import useAuthContext from "../hooks/useAuthContext";
-import { useEffect, useState } from "react";
+import useNoteContext from "../hooks/useNoteContext";
+import { useEffect } from "react";
 
 function Home() {
   const { user } = useAuthContext();
-
-  const [notes, setNotes] = useState([]);
+  const {notes, dispatch} = useNoteContext()
 
   async function fetchNotes() {
     try {
@@ -18,24 +18,23 @@ function Home() {
         },
       };
 
-      const response = await axios.get(
-        "http://localhost:4000/api/notes",
-        config
-      );
+      const response = await axios.get("http://localhost:4000/api/notes", config )
       const notes = await response.data;
-      setNotes(notes);
+      dispatch({type: "SET_NOTES", payload: notes}) 
     } catch (err) {
-      console.log("Notes fecth error", err.response.data);
+      console.log("Notes fecth error", err);
     }
   }
 
   useEffect(() => {
-    fetchNotes();
-  }, []);
+    if(user){
+      fetchNotes();
+    }
+  }, [user, dispatch]);
 
   return (
     <Container m={0} p={20} w="95%" fluid>
-      { !notes.length ? (
+      { !notes?.length ? (
         <Center  h={"100%"} mx="auto">
           <Loader />
         </Center>

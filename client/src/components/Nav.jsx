@@ -48,7 +48,7 @@ export function Nav() {
   const [active, setActive] = useState(0);
 
   const links = mockdata.map((link, index) => (
-    <Link to={link.route}>
+    <Link key={index} to={link.route}>
         <NavbarLink
         {...link}
         key={link.label}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { TextInput, MultiSelect, Button  } from '@mantine/core';
 import { RichTextEditor, Link } from '@mantine/tiptap';
 import { useEditor } from '@tiptap/react';
@@ -8,10 +8,14 @@ import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
 import useNoteContext from "../hooks/useNoteContext"
 import useAuthContext from "../hooks/useAuthContext"
+import { useNavigate } from 'react-router-dom';
+
 import axios from 'axios';
 
 const Create = () => {
   const {user} = useAuthContext()
+  const { dispatch } = useNoteContext()
+  const navigate = useNavigate()
 
   const [title, setTitle] = useState("")
   const [tags, setTags]= useState(null)
@@ -51,12 +55,13 @@ const Create = () => {
       }
     }   
     
- 
 
     const response = await axios.post("http://localhost:4000/api/notes/create", {title, tags, content}, config )
     const json = await response.data
+    dispatch({type: "CREATE_NOTE", payload: json})
     console.log(json)
     setLoading(false)
+    navigate("/home")
    }
   catch(err){
     console.log("Note creation error", err.response.data)

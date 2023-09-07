@@ -5,7 +5,7 @@ const noteContext = createContext()
 const noteReducer = (state, action) => {
     switch(action.type){
         case "SET_NOTES": 
-            return {
+             return {
                 notes: action.payload
             }
         case "CREATE_NOTE":
@@ -19,7 +19,7 @@ const noteReducer = (state, action) => {
         case "UPDATE_NOTE":
             const updatednotes = state.notes.map((n) => {
                 if (n._id === action.payload._id) {
-                    return action.payload;
+                     return action.payload;
                 }
                 return n;
             });
@@ -35,7 +35,7 @@ const NotesConetextProvider = ({ children }) => {
     const[state, dispatch] = useReducer(noteReducer, {notes: []})
     return (
        < noteContext.Provider value={{...state, dispatch}}>
-       { children }
+        { children }
        </noteContext.Provider>
     )
 }

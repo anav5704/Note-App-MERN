@@ -11,11 +11,12 @@ import useAuthContext from "../hooks/useAuthContext"
 import {useParams} from "react-router-dom"
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
- 
+
 const Update = () => {
-  const navigate = useNavigate()
+  const {dispatch} =  useNoteContext()
   const {user} = useAuthContext()
   const {id} = useParams()
+  const navigate = useNavigate()
 
   const [title, setTitle] = useState("")
   const [tags, setTags]= useState([])
@@ -56,13 +57,13 @@ const Update = () => {
 
     const response = await axios.put(`http://localhost:4000/api/notes/${id}`, {title, tags, content}, config )
     const json = await response.data
-    console.log(json)
+    dispatch({type: "UPDATE_NOTE", payload: json})
     setLoading(false)
+    navigate("/home")
    }
   catch(err){
     console.log("Note update error", err.response)
     setLoading(false)
-
   }
 }
 
@@ -83,7 +84,7 @@ const Update = () => {
 
     const response = await axios.delete(`http://localhost:4000/api/notes/${id}`, config )
     const json = await response.data
-    console.log(json)
+    dispatch({ type: 'DELETE_NOTE', payload: json})
     setLoading(false)
     navigate("/home")
    }
@@ -105,10 +106,10 @@ async function fetchNote(){
 
     const response = await axios.get(`http://localhost:4000/api/notes/${id}`, config )
     const json = await response.data
-    console.log(json)
     setTitle(json.title)
     setTags(json.tags)
     setConetent(json.content)
+ 
   }
   catch(err){
     console.log("Note fetch error", err.response)
@@ -117,8 +118,10 @@ async function fetchNote(){
 }
 
 useEffect(() => {
-  fetchNote()
-}, [])
+  if(user){
+    fetchNote()
+  }
+ }, [dispatch, user])
 
    return (
     <div>

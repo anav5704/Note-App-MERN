@@ -8,7 +8,7 @@ const useNoteContext = () => {
         throw Error("Note context broken") 
     }   
     
-    return useNoteContext
+    return context
 }
 
 export default useNoteContext
