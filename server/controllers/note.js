@@ -2,9 +2,24 @@ import {noteModel} from "../models/note.js"
 import mongoose from "mongoose"
 
 async function getAllNotes(req, res){
+    const { sortCriteria, sortBy } = req.query
+    let sort = {}
+    
+    switch(sortCriteria){
+        case "createdAt":{
+            sort = { "createdAt": sortBy }
+            break;}
+        case "updatedAt":{
+            sort = { "updatedAt": sortBy }
+            break;}
+        case "title":{
+            sort = { "title": sortBy }
+            break;}
+    }
+
     try{
         const id = req.user._id
-        const notes = await noteModel.find({owner: id}).sort({createdAt: -1})
+        const notes = await noteModel.find({owner: id}).sort(sort)
         res.status(200).json(notes)
     }
     catch(err){

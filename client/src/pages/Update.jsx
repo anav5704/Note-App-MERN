@@ -20,7 +20,7 @@ const Update = () => {
 
   const [title, setTitle] = useState("")
   const [tags, setTags]= useState([])
-  const [content, setConetent] = useState("")
+  const [content, setContent] = useState("")
   const [loading, setLoading] = useState(false)
 
 
@@ -108,8 +108,8 @@ async function fetchNote(){
     const json = await response.data
     setTitle(json.title)
     setTags(json.tags)
-    setConetent(json.content)
- 
+    setContent(json.content) 
+    editor.commands.setContent(json.content)
   }
   catch(err){
     console.log("Note fetch error", err.response)
@@ -121,7 +121,7 @@ useEffect(() => {
   if(user){
     fetchNote()
   }
- }, [dispatch, user])
+ }, [dispatch, user, editor])
 
    return (
     <div>
@@ -146,7 +146,7 @@ useEffect(() => {
         onChange={(e) => setTags(e)}
         />
             <RichTextEditor  editor={editor}>
-            <RichTextEditor.Toolbar sticky stickyOffset={60} onClick={() => setConetent( editor.getHTML()) }>
+            <RichTextEditor.Toolbar sticky stickyOffset={60} onClick={() => setContent( editor.getHTML()) }>
                 <RichTextEditor.ControlsGroup>
                 <RichTextEditor.Bold />
                 <RichTextEditor.Italic />
@@ -182,7 +182,7 @@ useEffect(() => {
                 </RichTextEditor.ControlsGroup>
             </RichTextEditor.Toolbar>
 
-            <RichTextEditor.Content  onInput={() => setConetent(editor.getHTML())}/>
+            <RichTextEditor.Content  onInput={() => setContent(editor.getHTML())}/>
         </RichTextEditor>
         <Button loading={loading} type='submit' onClick={handleUpdate}  w={"50%"}>Update Note</Button>
         <Button color='red' variant='outline' loading={loading} type='submit' onClick={handleDelete}  w={"50%"}>Delete Note</Button>
