@@ -12,7 +12,7 @@ function Home() {
   const [filterdNotes, setFilterdNotes] = useState([])
   const [searchQuery, setSearchQuery] = useState("")
   const [sortCriteria, setSortCriteria]  = useState("updatedAt")
-  const [sortBy, setSortBy]  = useState(1)
+  const [sortBy, setSortBy]  = useState(-1)
   const [gridLayout, setGridLayout] = useState(true)
 
   async function fetchNotes() {
@@ -24,8 +24,8 @@ function Home() {
       const notes = await response.data;
       dispatch({type: "SET_NOTES", payload: notes}) 
       setFilterdNotes(notes)
-      console.log("yo")
-    } catch (err) {
+      console.log("Fetch Notes")
+     } catch (err) {
       console.log("Notes fecth error", err);
     }
   }
@@ -39,11 +39,38 @@ function Home() {
     setFilterdNotes(filteredNotes)
   };
 
+  const getPreferences = () => {
+    const criteria = localStorage.getItem("sortCritria")
+    const by = localStorage.getItem("sortBy")
+    const layout = localStorage.getItem("gridLayout")
+  
+    criteria && setSortCriteria(criteria.toString())
+    by && setSortBy(parseInt(by)) 
+    layout && layout === "true" ? setGridLayout(true) : setGridLayout(false)
+    console.log("Get Preferences")
+  }
+
   useEffect(() => {
     if(user){
-      fetchNotes();
+      getPreferences()
+      fetchNotes()
     }
   }, [user, dispatch, sortCriteria, sortBy]);
+
+  const handleSortCriteria = (criteria) => {
+    setSortCriteria(criteria)
+    localStorage.setItem("sortCritria", criteria)
+  }
+
+  const handleSortBy = (by) => {
+    setSortBy(by)
+    localStorage.setItem("sortBy", by)
+  }
+
+  const handleLayout = (layout) => {
+    setGridLayout(layout)
+    localStorage.setItem("gridLayout", layout)
+  }
 
   return (
     <Container m={0} p={20} w="95%" fluid>
@@ -58,8 +85,6 @@ function Home() {
             <Flex align={"center"} gap={"md"}>
             <TextInput value={searchQuery} onChange={handleSearch}  size="md"  placeholder="Search Notes" icon={<IconSearch  stroke={1.75} size="1.25em" />} />
 
-
-
             <Menu offset={20} shadow="md" width={150} position="bottom-end">
               <Menu.Target>
               <ActionIcon color="blue" size="xl" variant="light" >
@@ -70,13 +95,13 @@ function Home() {
               <Menu.Dropdown>
                 <Menu.Label>Sort</Menu.Label>
                 <Menu.Divider />
-                <Menu.Item  onClick={() => setSortCriteria("title")}>Title</Menu.Item>
-                <Menu.Item  onClick={() => setSortCriteria("createdAt")}>Created</Menu.Item>
-                <Menu.Item  onClick={() => setSortCriteria("updatedAt")}>Updated</Menu.Item>
+                <Menu.Item  onClick={() => handleSortCriteria("title")}>Title</Menu.Item>
+                <Menu.Item  onClick={() => handleSortCriteria("createdAt")}>Created</Menu.Item>
+                <Menu.Item  onClick={() => handleSortCriteria("updatedAt")}>Updated</Menu.Item>
                 <Menu.Divider />
                 <Flex>
-                  <Menu.Item onClick={() => setSortBy(1)} p={7}><IconArrowUp width={"100%"}/> </Menu.Item>
-                  <Menu.Item onClick={() => setSortBy(-1)} p={7}><IconArrowDown width={"100%"}/> </Menu.Item>
+                  <Menu.Item onClick={() => handleSortBy(1)} p={7}><IconArrowUp width={"100%"}/> </Menu.Item>
+                  <Menu.Item onClick={() => handleSortBy(-1)} p={7}><IconArrowDown width={"100%"}/> </Menu.Item>
                 </Flex>
                </Menu.Dropdown>
             </Menu>
@@ -91,8 +116,8 @@ function Home() {
               <Menu.Dropdown>
                 <Menu.Label>Layouts</Menu.Label>
                 <Menu.Divider />
-                <Menu.Item  onClick={() => setGridLayout(true)}>Grid</Menu.Item>
-                <Menu.Item  onClick={() => setGridLayout(false)}>List</Menu.Item>
+                <Menu.Item  onClick={() => handleLayout(true)}>Grid</Menu.Item>
+                <Menu.Item  onClick={() => handleLayout(false)}>List</Menu.Item>
                </Menu.Dropdown>
             </Menu>
 
