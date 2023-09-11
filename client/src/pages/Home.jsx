@@ -11,9 +11,9 @@ function Home() {
   const {notes, dispatch} = useNoteContext()
   const [filterdNotes, setFilterdNotes] = useState([])
   const [searchQuery, setSearchQuery] = useState("")
-  const [sortCriteria, setSortCriteria]  = useState("updatedAt")
-  const [sortBy, setSortBy]  = useState(-1)
-  const [gridLayout, setGridLayout] = useState(true)
+  const [sortCriteria, setSortCriteria]  = useState(localStorage.getItem("sortCritria") || "updatedAt")
+  const [sortBy, setSortBy]  = useState(localStorage.getItem("sortBy") || -1)
+  const [gridLayout, setGridLayout] = useState(localStorage.getItem("gridLayout") && true)
 
   async function fetchNotes() {
     try {
@@ -24,7 +24,6 @@ function Home() {
       const notes = await response.data;
       dispatch({type: "SET_NOTES", payload: notes}) 
       setFilterdNotes(notes)
-      console.log("Fetch Notes")
      } catch (err) {
       console.log("Notes fecth error", err);
     }
@@ -38,24 +37,13 @@ function Home() {
     );
     setFilterdNotes(filteredNotes)
   };
-
-  const getPreferences = () => {
-    const criteria = localStorage.getItem("sortCritria")
-    const by = localStorage.getItem("sortBy")
-    const layout = localStorage.getItem("gridLayout")
   
-    criteria && setSortCriteria(criteria.toString())
-    by && setSortBy(parseInt(by)) 
-    layout && layout === "true" ? setGridLayout(true) : setGridLayout(false)
-    console.log("Get Preferences")
-  }
-
   useEffect(() => {
     if(user){
-      getPreferences()
       fetchNotes()
     }
   }, [user, dispatch, sortCriteria, sortBy]);
+  
 
   const handleSortCriteria = (criteria) => {
     setSortCriteria(criteria)
@@ -69,7 +57,7 @@ function Home() {
 
   const handleLayout = (layout) => {
     setGridLayout(layout)
-    localStorage.setItem("gridLayout", layout)
+    localStorage.setItem("gridLayout", layout === true ? layout : "")
   }
 
   return (
