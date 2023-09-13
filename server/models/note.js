@@ -1,12 +1,8 @@
-import mongoose from "mongoose"
+import mongoose, { Schema } from "mongoose"
 
 const noteSchema = new mongoose.Schema({
     title: {
         type: String, 
-        required: true, 
-    },
-    tags: {
-        type: Array,
         required: true, 
     },
     content: {
@@ -14,13 +10,9 @@ const noteSchema = new mongoose.Schema({
         required: true, 
     },
     owner: {
-        type: String, 
-        required: true, 
-
+        type: Schema.Types.ObjectId, // Primary key equivalent
+        ref: "users", // Foreign key equivalent
     },
 }, {timestamps: true})
 
 export const noteModel = mongoose.model("Note", noteSchema )
-
-
-

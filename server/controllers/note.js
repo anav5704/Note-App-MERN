@@ -47,11 +47,10 @@ async function getOneNote(req, res){
 }
 
 async function createNote(req, res){
-    const {title, tags, content} = req.body
+    const {title, content} = req.body
 
     let missing = []
     if(!title) missing.push("Title")
-    if(!tags) missing.push("Tags")
     if(!content) missing.push("Content")
     
     if(missing.length > 0){
@@ -60,7 +59,7 @@ async function createNote(req, res){
 
     try{
         const id = req.user._id
-        const note = await noteModel.create({title, tags, content, owner: id }) 
+        const note = await noteModel.create({title, content, owner: id }) 
         res.status(200).json(note)
     }
     catch(err){
@@ -90,13 +89,13 @@ async function deleteNote(req, res){
 async function updateNote(req, res){
     try{
         const {id} = await req.params
-        const {title, tags, content} = req.body
+        const {title, content} = req.body
 
          if(!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(404).json({error: "Document Does not exist"})
         }
 
-        const note = await noteModel.findByIdAndUpdate({_id: id},  {title, tags, content})
+        const note = await noteModel.findByIdAndUpdate({_id: id},  {title, content})
 
         if(!note){
             return res.status(400).json({error: "No Such Document"})

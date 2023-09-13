@@ -1,6 +1,6 @@
 import { Menu, Title, SimpleGrid, Container, Loader, Center, Flex, TextInput, ActionIcon } from "@mantine/core";
 import { IconSearch, IconAdjustmentsHorizontal, IconLayoutGrid, IconArrowUp, IconArrowDown } from '@tabler/icons-react';
-import Note from "../contexts/Note";
+import Note from "../components/Note"
 import axios from "axios";
 import useAuthContext from "../hooks/useAuthContext";
 import useNoteContext from "../hooks/useNoteContext";
@@ -23,6 +23,7 @@ function Home() {
       }})
       const notes = await response.data;
       dispatch({type: "SET_NOTES", payload: notes}) 
+      console.log(notes)
       setFilterdNotes(notes)
      } catch (err) {
       console.log("Notes fecth error", err);

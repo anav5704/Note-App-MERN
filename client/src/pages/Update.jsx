@@ -19,16 +19,9 @@ const Update = () => {
   const navigate = useNavigate()
 
   const [title, setTitle] = useState("")
-  const [tags, setTags]= useState([])
   const [content, setContent] = useState("")
   const [loading, setLoading] = useState(false)
-
-
-  const [data, setData]= useState([
-    { value: 'Study', label: 'Study' },
-    { value: 'Movies', label: 'Movies' },
-])
-
+ 
     const editor = useEditor({
         extensions: [
           StarterKit,
@@ -55,14 +48,14 @@ const Update = () => {
       }
     }
 
-    const response = await axios.put(`http://localhost:4000/api/notes/${id}`, {title, tags, content}, config )
+    const response = await axios.put(`http://localhost:4000/api/notes/${id}`, {title, content}, config )
     const json = await response.data
     dispatch({type: "UPDATE_NOTE", payload: json})
     setLoading(false)
     navigate("/home")
    }
   catch(err){
-    console.log("Note update error", err.response)
+    console.log("Note update error", err)
     setLoading(false)
   }
 }
@@ -89,7 +82,7 @@ const Update = () => {
     navigate("/home")
    }
   catch(err){
-    console.log("Note update error", err.response)
+    console.log("Note update error", err)
     setLoading(false)
 
   }
@@ -101,18 +94,17 @@ async function fetchNote(){
       headers: {
         "Content-Type": "application/json",
         "Authorization" : `Bearer: ${user.token}`
-      }
+      } 
     }
 
     const response = await axios.get(`http://localhost:4000/api/notes/${id}`, config )
     const json = await response.data
+
     setTitle(json.title)
-    setTags(json.tags)
-    setContent(json.content) 
     editor.commands.setContent(json.content)
   }
   catch(err){
-    console.log("Note fetch error", err.response)
+    console.log("Note fetch error", err)
  
   }
 }
@@ -130,21 +122,7 @@ useEffect(() => {
         value={title}
         onChange={(e) => {setTitle(e.target.value)}}
         withAsterisk
-        />
-       <MultiSelect
-         data={data}
-         value={tags}
-        placeholder="Note Tags"
-        searchable
-        creatable
-        getCreateLabel={(query) => `+ Update ${query}`}
-        onCreate={(query) => {
-            const item = { value: query, label: query };
-            setData((current) => [...current, item]);
-            return item;
-        }}
-        onChange={(e) => setTags(e)}
-        />
+         />
             <RichTextEditor  editor={editor}>
             <RichTextEditor.Toolbar sticky stickyOffset={60} onClick={() => setContent( editor.getHTML()) }>
                 <RichTextEditor.ControlsGroup>

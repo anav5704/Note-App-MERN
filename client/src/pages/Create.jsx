@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TextInput, MultiSelect, Button  } from '@mantine/core';
+import { TextInput, Select, Button  } from '@mantine/core';
 import { RichTextEditor, Link } from '@mantine/tiptap';
 import { useEditor } from '@tiptap/react';
 import Highlight from '@tiptap/extension-highlight';
@@ -18,15 +18,8 @@ const Create = () => {
   const navigate = useNavigate()
 
   const [title, setTitle] = useState("")
-  const [tags, setTags]= useState(null)
   const [content, setConetent] = useState(null)
   const [loading, setLoading] = useState(false)
-
-
-  const [data, setData]= useState([
-    { value: 'Study', label: 'Study' },
-    { value: 'Movies', label: 'Movies' },
-])
 
     const editor = useEditor({
         extensions: [
@@ -56,7 +49,7 @@ const Create = () => {
     }   
     
 
-    const response = await axios.post("http://localhost:4000/api/notes/create", {title, tags, content}, config )
+    const response = await axios.post("http://localhost:4000/api/notes/create", {title, content}, config )
     const json = await response.data
     dispatch({type: "CREATE_NOTE", payload: json})
     console.log(json)
@@ -77,19 +70,6 @@ const Create = () => {
         value={title}
         onChange={(e) => {setTitle(e.target.value)}}
         withAsterisk
-        />
-       <MultiSelect
-         data={data}
-        placeholder="Note Tags"
-        searchable
-        creatable
-        getCreateLabel={(query) => `+ Create ${query}`}
-        onCreate={(query) => {
-            const item = { value: query, label: query };
-            setData((current) => [...current, item]);
-            return item;
-        }}
-        onChange={(e) => setTags(e)}
         />
             <RichTextEditor  editor={editor} >
             <RichTextEditor.Toolbar sticky stickyOffset={60} onClick={() => setConetent( editor.getHTML())}>
