@@ -72,12 +72,12 @@ function Home() {
           <Flex align={"start"} justify={"space-between"}>
             <Title mb={20}>Welcome Back 😽</Title>
             <Flex align={"center"} gap={"md"}>
-            <TextInput value={searchQuery} onChange={handleSearch}  size="md"  placeholder="Search Notes" icon={<IconSearch  stroke={1.75} size="1.25em" />} />
+            <TextInput value={searchQuery} onChange={handleSearch} w={300}  size="sm"  placeholder="Search Notes" icon={<IconSearch  stroke={1.75} size="1.25em" />} />
 
             <Menu offset={20} shadow="md" width={150} position="bottom-end">
               <Menu.Target>
-              <ActionIcon color="blue" size="xl" variant="light" >
-                <IconAdjustmentsHorizontal stroke={1.75} size="1.25em"   />
+              <ActionIcon color="blue" size={35} variant="light" >
+                <IconAdjustmentsHorizontal stroke={1.75} size="1.1em"   />
               </ActionIcon>
               </Menu.Target>
 
@@ -97,8 +97,8 @@ function Home() {
 
             <Menu offset={20} shadow="md" width={150} position="bottom-end">
               <Menu.Target>
-                <ActionIcon color="blue" size="xl" variant="light" >
-                <IconLayoutGrid stroke={1.75} size="1.25em"   />
+                <ActionIcon color="blue" size={35} variant="light" >
+                <IconLayoutGrid stroke={1.75} size="1.1em" />
               </ActionIcon>
               </Menu.Target>
 

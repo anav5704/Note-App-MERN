@@ -8,7 +8,7 @@ const Note = ({note, sortCriteria, gridLayout}) => {
 
   return (
   <Link to={`/notes/${note._id}`}>
-    <Card withBorder p={10}>
+    <Card p={10}>
         <Text weight={600} size="lg" >
           {note?.title}
         </Text>
