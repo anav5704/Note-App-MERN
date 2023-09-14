@@ -1,4 +1,4 @@
-import {noteModel} from "../models/note.js"
+import {noteModel} from "../models/noteModel.js"
 import mongoose from "mongoose"
 
 async function getAllNotes(req, res){
