@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { TextInput, MultiSelect, Button  } from '@mantine/core';
-import { RichTextEditor, Link } from '@mantine/tiptap';
+import { TextInput, MultiSelect, Button, Container, Flex  } from '@mantine/core';
+import { RichTextEditor } from '@mantine/tiptap';
 import { useEditor } from '@tiptap/react';
 import Highlight from '@tiptap/extension-highlight';
 import StarterKit from '@tiptap/starter-kit';
@@ -26,7 +26,6 @@ const Update = () => {
         extensions: [
           StarterKit,
           Underline,
-          Link,
           Highlight,
           TextAlign.configure({ types: ['heading', 'paragraph'] }),
         ],
@@ -101,6 +100,7 @@ async function fetchNote(){
     const json = await response.data
 
     setTitle(json.title)
+    setContent(json.content)
     editor.commands.setContent(json.content)
   }
   catch(err){
@@ -116,15 +116,23 @@ useEffect(() => {
  }, [dispatch, user, editor])
 
    return (
-    <div>
+    <Container m={0} p={20} pt={5} w="95%" fluid>
+        <Flex align={"center"} justify={"space-between"} >
        <TextInput
+        size='xl'
+        variant='unstyled'
         placeholder="Note Heading"
         value={title}
         onChange={(e) => {setTitle(e.target.value)}}
         withAsterisk
-         />
-            <RichTextEditor  editor={editor}>
-            <RichTextEditor.Toolbar sticky stickyOffset={60} onClick={() => setContent( editor.getHTML()) }>
+        />
+        <Flex align={"center"} justify={"space-between"} gap={15}>
+          <Button color='red' variant='light' loading={loading} type='submit' onClick={handleDelete}  w={"50%"}>Delete Note</Button>
+          <Button loading={loading} type='submit' onClick={handleUpdate}  w={"50%"}>Update Note</Button>
+        </Flex>
+        </Flex>
+        <RichTextEditor style={{border: "none"}} editor={editor}>
+            <RichTextEditor.Toolbar  p={0} style={{border: "none"}} onClick={() => setContent( editor.getHTML())}>
                 <RichTextEditor.ControlsGroup>
                 <RichTextEditor.Bold />
                 <RichTextEditor.Italic />
@@ -148,11 +156,6 @@ useEffect(() => {
 
                 </RichTextEditor.ControlsGroup>
 
-                <RichTextEditor.ControlsGroup>
-                <RichTextEditor.Link />
-                <RichTextEditor.Unlink />
-                </RichTextEditor.ControlsGroup>
-
                 <RichTextEditor.ControlsGroup >
                 <RichTextEditor.AlignLeft />
                 <RichTextEditor.AlignCenter />
@@ -160,11 +163,9 @@ useEffect(() => {
                 </RichTextEditor.ControlsGroup>
             </RichTextEditor.Toolbar>
 
-            <RichTextEditor.Content  onInput={() => setContent(editor.getHTML())}/>
+            <RichTextEditor.Content onKeyDown={() => setContent(editor.getHTML())}  onInput={() => setContent(editor.getHTML())}/>
         </RichTextEditor>
-        <Button loading={loading} type='submit' onClick={handleUpdate}  w={"50%"}>Update Note</Button>
-        <Button color='red' variant='outline' loading={loading} type='submit' onClick={handleDelete}  w={"50%"}>Delete Note</Button>
-    </div>
+    </Container>
   )
 }
 

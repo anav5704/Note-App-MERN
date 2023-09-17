@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { TextInput, Select, Button  } from '@mantine/core';
-import { RichTextEditor, Link } from '@mantine/tiptap';
+import { TextInput, Flex, Button, Container  } from '@mantine/core';
+import { RichTextEditor } from '@mantine/tiptap';
 import { useEditor } from '@tiptap/react';
 import Highlight from '@tiptap/extension-highlight';
 import StarterKit from '@tiptap/starter-kit';
@@ -25,7 +25,6 @@ const Create = () => {
         extensions: [
           StarterKit,
           Underline,
-          Link,
           Highlight,
           TextAlign.configure({ types: ['heading', 'paragraph'] }),
         ],
@@ -64,15 +63,20 @@ const Create = () => {
 }
 
    return (
-    <div>
-       <TextInput
-        placeholder="Note Heading"
-        value={title}
-        onChange={(e) => {setTitle(e.target.value)}}
-        withAsterisk
-        />
-            <RichTextEditor  editor={editor} >
-            <RichTextEditor.Toolbar sticky stickyOffset={60} onClick={() => setConetent( editor.getHTML())}>
+    <Container m={0} p={20} pt={5} w="95%" fluid>
+        <Flex align={"center"} justify={"space-between"}>
+        <TextInput
+        size='xl'
+          variant='unstyled'
+          placeholder="Note Heading"
+          value={title}
+          onChange={(e) => {setTitle(e.target.value)}}
+          withAsterisk
+          />
+          <Button loading={loading} type='submit' onClick={handleSubmit}  >Create Note</Button>
+        </Flex>
+            <RichTextEditor style={{border: "none"}} editor={editor}>
+            <RichTextEditor.Toolbar  p={0} style={{border: "none"}} onClick={() => setConetent( editor.getHTML())}>
                 <RichTextEditor.ControlsGroup>
                 <RichTextEditor.Bold />
                 <RichTextEditor.Italic />
@@ -96,11 +100,6 @@ const Create = () => {
 
                 </RichTextEditor.ControlsGroup>
 
-                <RichTextEditor.ControlsGroup>
-                <RichTextEditor.Link />
-                <RichTextEditor.Unlink />
-                </RichTextEditor.ControlsGroup>
-
                 <RichTextEditor.ControlsGroup >
                 <RichTextEditor.AlignLeft />
                 <RichTextEditor.AlignCenter />
@@ -108,10 +107,9 @@ const Create = () => {
                 </RichTextEditor.ControlsGroup>
             </RichTextEditor.Toolbar>
 
-            <RichTextEditor.Content onInput={() => setConetent(editor.getHTML())}/>
+            <RichTextEditor.Content  onInput={() => setConetent(editor.getHTML())}/>
         </RichTextEditor>
-        <Button loading={loading} type='submit' onClick={handleSubmit}  w={"100%"}>Create Note</Button>
-    </div>
+    </Container>
   )
 }
 

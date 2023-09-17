@@ -114,7 +114,7 @@ function Home() {
 
             </Flex>
           </Flex>
-          <SimpleGrid cols={gridLayout ? 4 : 2} spacing="lg">
+          <SimpleGrid  cols={gridLayout ? 4 : 2} spacing="lg">
             {filterdNotes.map((note, index) => (
               <Note key={index} note={note} sortCriteria={sortCriteria} gridLayout={gridLayout}/>
             ))}
