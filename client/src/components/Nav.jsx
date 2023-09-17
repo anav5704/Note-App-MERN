@@ -6,6 +6,10 @@ import { LinksGroup } from "../components/LinksGroup"
 import useLogout from "../hooks/useLogout"
 import {Link} from "react-router-dom"
 
+const toggleModal = () => {
+  alert("hey")
+}
+
 const topLinksData = [
   { label: 'Home', icon: IconHome2 },
   { label: 'Add Note', icon: IconNotes },
@@ -16,6 +20,7 @@ const topLinksData = [
     links: [
       { label: 'Folder 1', link: '/' },
       { label: 'Folder 2', link: '/' },
+      { label: 'Create Folder', link: '/', handldCreateNew: toggleModal },
     ],
   },
 ];
@@ -108,3 +113,5 @@ export function Nav() {
 }
 
 export default Nav
+
+// use hot keys

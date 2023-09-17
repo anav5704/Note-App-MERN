@@ -50,9 +50,12 @@ export function LinksGroup({ icon: Icon, label, initiallyOpened, links, handleCl
     <Text
       component="a"
       className={classes.link}
-      href={link.link}
+      href={link?.link}
       key={link.label}
-      onClick={(event) => event.preventDefault()}
+      onClick={(event) => {
+        event.preventDefault()
+        link?.handldCreateNew()
+      }}
     >
       {link.label}
     </Text>
@@ -60,7 +63,7 @@ export function LinksGroup({ icon: Icon, label, initiallyOpened, links, handleCl
 
   const handleButtomClick = () => {
     setOpened((o) => !o)
-    handleClick()
+    handleClick && handleClick()
   }
 
   return (

@@ -5,6 +5,9 @@ import axios from "axios";
 import useAuthContext from "../hooks/useAuthContext";
 import useNoteContext from "../hooks/useNoteContext";
 import { useEffect, useState } from "react";
+import { useHotkeys  } from '@mantine/hooks';
+
+
  
 function Home() {
   const {user} = useAuthContext();
@@ -14,6 +17,10 @@ function Home() {
   const [sortCriteria, setSortCriteria]  = useState(localStorage.getItem("sortCritria") || "updatedAt")
   const [sortBy, setSortBy]  = useState(localStorage.getItem("sortBy") || -1)
   const [gridLayout, setGridLayout] = useState(localStorage.getItem("gridLayout") && true)
+
+  useHotkeys([
+    ['/', () => console.log('Forward Slash')],
+  ]);
 
   async function fetchNotes() {
     try {
