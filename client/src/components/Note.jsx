@@ -14,7 +14,7 @@ const Note = ({note, sortCriteria, gridLayout}) => {
         </Text>
         {gridLayout && 
         <Text opacity={.25}>
-        {sortCriteria == "createdAt" ? "Created" : "Updated"} {time} ago
+        {sortCriteria == "createdAt" ? "Created" : "Updated"} {time} 
         </Text>
         }
       </Card>  

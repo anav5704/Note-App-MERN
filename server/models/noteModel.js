@@ -9,9 +9,13 @@ const noteSchema = new mongoose.Schema({
         type: String,
         required: true, 
     },
+    folder: {
+        type: Schema.Types.ObjectId, 
+        ref: "Folder", 
+    },
     owner: {
-        type: Schema.Types.ObjectId, // Primary key equivalent
-        ref: "users", // Foreign key equivalent
+        type: Schema.Types.ObjectId,
+        ref: 'User', 
     },
 }, {timestamps: true})
 

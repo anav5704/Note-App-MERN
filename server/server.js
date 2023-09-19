@@ -3,8 +3,8 @@ import express from "express"
 import mongoose from "mongoose"
 import cors from "cors"
 import dotenv from "dotenv"
-import noteRoutes from "./routes/note.js"
-import userRoutes from "./routes/user.js"
+import noteRoutes from "./routes/noteRoutes.js"
+import userRoutes from "./routes/userRoutes.js"
 
 const app = express()
 
