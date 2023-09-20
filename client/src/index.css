@@ -24,22 +24,18 @@ a {
   display: flex;
 }
 
-/* width */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   display: none;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   display: none;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 

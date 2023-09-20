@@ -40,7 +40,7 @@ function useLogin(){
         } 
       }
 
-      return {login, loading}
+      return { login, loading }
 }
  
 export default useLogin

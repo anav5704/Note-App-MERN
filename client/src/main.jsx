@@ -10,7 +10,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <AuthContextProvider>
       <NotesConetextProvider>
-        <MantineProvider withNormalizeCSS withGlobalStyles theme={{ colorScheme: 'dark' }}>
+        <MantineProvider  withNormalizeCSS withGlobalStyles theme={{ colorScheme: 'red' }}>
           <Maintine />
         </MantineProvider>
       </NotesConetextProvider>

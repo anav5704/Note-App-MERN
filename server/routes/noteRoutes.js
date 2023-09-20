@@ -1,6 +1,6 @@
+import { getAllNotes, getOneNote, createNote, updateNote, deleteNote } from "../controllers/noteController.js"
 import express from "express"
 import requreAuth from "../middleware/requireAuth.js"
-import { getAllNotes, getOneNote, createNote, updateNote, deleteNote } from "../controllers/noteController.js"
 
 const noteRoutes = express.Router()
 noteRoutes.use(requreAuth)
@@ -8,13 +8,12 @@ noteRoutes.use(requreAuth)
 noteRoutes.get("/", getAllNotes)
 
 noteRoutes.route("/:id")
-.get(getOneNote)
+    .get(getOneNote)
 
-.post(createNote)
+    .post(createNote)
 
-.put(updateNote)
+    .put(updateNote)
 
-.delete(deleteNote)
-
+    .delete(deleteNote)
 
 export default noteRoutes

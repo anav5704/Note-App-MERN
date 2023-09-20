@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom"
-import Nav from "../components/Nav"
+import SIdeBar from "../components/SIdeBar"
 
 const Base = () => {
   return (
     <div className="page">
-        <Nav />
-        <Outlet />
+      <SIdeBar />
+      <Outlet />
     </div>
   )
 }

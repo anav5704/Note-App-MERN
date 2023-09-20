@@ -15,19 +15,19 @@ app.use(listener)
 app.use("/api/notes", noteRoutes)
 app.use("/api/users", userRoutes)
 
-function listener(req, res, next){
+function listener(req, res, next) {
     console.log(req.method, req.path)
     next()
 }
 
-async function Start(){
-    try {   
+async function Start() {
+    try {
         mongoose.connect(process.env.MONGO)
         app.listen(process.env.PORT, () => {
             console.log(`Server started on port ${process.env.PORT}`)
         })
     }
-    catch(err){
+    catch (err) {
         console.log("Server start error", err)
     }
 }

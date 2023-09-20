@@ -1,16 +1,16 @@
 import { useState } from 'react';
-import { ActionIcon, useMantineColorScheme } from '@mantine/core';
+import { useMantineColorScheme } from '@mantine/core';
 import { Navbar, Center, Tooltip, UnstyledButton, createStyles, Stack, rem, px } from '@mantine/core';
-import {IconHome2,IconMoon,IconFilePlus ,IconLogout, IconSunHigh, IconSunglasses } from '@tabler/icons-react';
+import { IconHome2, IconMoon, IconFilePlus, IconLogout, IconSunHigh, IconSunglasses } from '@tabler/icons-react';
+import { Link } from "react-router-dom"
 import useLogout from "../hooks/useLogout"
-import {Link} from "react-router-dom"
 
 const useStyles = createStyles((theme) => ({
   link: {
     width: rem(50),
     height: rem(50),
     borderRadius: theme.radius.md,
-    display: 'flex',  
+    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     color: theme.colors.dark[0],
@@ -39,17 +39,17 @@ function NavbarLink({ icon: Icon, label, active, onClick }) {
   );
 }
 
-const mockdata = [
+const menuItems = [
   { icon: IconHome2, label: 'Home', route: "/home" },
-  { icon: IconFilePlus , label: 'Add Note', route: "/create" },
+  { icon: IconFilePlus, label: 'Add Note', route: "/create" },
 ];
 
-export function Nav() {
+export function SIdeBar() {
   const [active, setActive] = useState(0);
 
-  const links = mockdata.map((link, index) => (
+  const links = menuItems.map((link, index) => (
     <Link key={index} to={link.route}>
-        <NavbarLink
+      <NavbarLink
         {...link}
         key={link.label}
         active={index === active}
@@ -60,7 +60,7 @@ export function Nav() {
 
   const { logout } = useLogout()
 
-  function handleSumbit(){
+  function handleSumbit() {
     logout()
   }
 
@@ -68,12 +68,11 @@ export function Nav() {
   const dark = colorScheme === 'dark';
 
   return (
-    <Navbar height={"100vh"}  width={{ base: 80 }} p="md" sx={(theme) => ({
+    <Navbar height={"100vh"} width={{ base: 80 }} p="md" sx={(theme) => ({
       backgroundColor: theme.fn.variant({ variant: 'filled', color: theme.primaryColor })
         .background,
-    })}> 
+    })}>
       <Center>
-        {/* <MantineLogo type="mark" size={30} /> */}
       </Center>
       <Navbar.Section grow mt={0}>
         <Stack justify="center" spacing={10}>
@@ -82,12 +81,12 @@ export function Nav() {
       </Navbar.Section>
       <Navbar.Section>
         <Stack justify="center" spacing={10}>
-          <NavbarLink onClick={() => toggleColorScheme()} icon={  dark ? IconMoon : IconSunHigh } label="Toggle Theme" />
-          <NavbarLink icon={IconLogout} label="Logout" onClick={handleSumbit}/>
+          <NavbarLink onClick={() => toggleColorScheme()} icon={dark ? IconMoon : IconSunHigh} label="Toggle Theme" />
+          <NavbarLink icon={IconLogout} label="Logout" onClick={handleSumbit} />
         </Stack>
       </Navbar.Section>
     </Navbar>
   );
 }
 
-export default Nav
+export default SIdeBar

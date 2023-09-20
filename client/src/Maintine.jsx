@@ -1,7 +1,7 @@
-import App from './App';
 import { Notifications } from '@mantine/notifications'
 import { MantineProvider, ColorSchemeProvider } from '@mantine/core';
 import { useHotkeys, useLocalStorage } from '@mantine/hooks';
+import App from './App';
 
 function Maintine() {
   const [colorScheme, setColorScheme] = useLocalStorage({
@@ -15,7 +15,7 @@ function Maintine() {
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
-        <Notifications  />
+        <Notifications />
         <App />
       </MantineProvider>
     </ColorSchemeProvider>
