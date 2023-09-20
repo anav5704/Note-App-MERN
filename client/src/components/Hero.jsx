@@ -1,18 +1,7 @@
-import { Link } from "react-router-dom"
 import { createStyles, Title, Text, Button, Container, rem, Avatar, Tooltip, Center } from '@mantine/core';
+import { Link } from "react-router-dom"
 
 const useStyles = createStyles((theme) => ({
-  wrapper: {
-    position: 'relative',
-    paddingTop: rem(120),
-    paddingBottom: rem(80),
-
-    [theme.fn.smallerThan('sm')]: {
-      paddingTop: rem(80),
-      paddingBottom: rem(60),
-    },
-  },
-
   inner: {
     position: 'relative',
     zIndex: 1,
@@ -91,7 +80,7 @@ function Hero() {
   const { classes } = useStyles();
 
   return (
-    <Container className={classes.wrapper} size={1400}>
+    <Container   >
       <div className={classes.inner}>
         <Title className={classes.title}>
           Ready To{' '}

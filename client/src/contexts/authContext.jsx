@@ -18,6 +18,13 @@ const AuthContextProvider = ({ children }) => {
         user: null
     })
 
+    const headerConfig = {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer: ${state?.user?.token}`
+        }
+    }
+
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"))
         if (user) {
@@ -25,10 +32,8 @@ const AuthContextProvider = ({ children }) => {
         }
     }, [])
 
-    console.log("Auth Context State: ", state)
-
     return (
-        <authContext.Provider value={{ ...state, dispatch }}>
+        <authContext.Provider value={{ ...state, headerConfig, dispatch }}>
             {children}
         </authContext.Provider>
     )

@@ -1,13 +1,12 @@
-import { IconX, IconCheck } from '@tabler/icons-react'
-import { notifications } from '@mantine/notifications'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useNoteContext from "../hooks/useNoteContext"
 import useAuthContext from "../hooks/useAuthContext"
+import Notify from '../utils/notificationHelper'
 import axios from 'axios'
 
 function useDelete() {
-  const { user } = useAuthContext()
+  const { headerConfig } = useAuthContext()
   const { dispatch } = useNoteContext()
   const navigate = useNavigate()
   const [deleteLoading, setDeleteLoading] = useState(false)
@@ -16,39 +15,18 @@ function useDelete() {
     setDeleteLoading(true)
 
     try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer: ${user.token}`
-        }
-      }
-
-      const response = await axios.delete(`http://localhost:4000/api/notes/${id}`, config)
+      const response = await axios.delete(`http://localhost:4000/api/notes/${id}`, headerConfig)
       const json = await response.data
+
       dispatch({ type: 'DELETE_NOTE', payload: json })
-      notifications.show({
-        withBorder: true,
-        title: 'All Good!',
-        message: 'Your note was succesfully deleted',
-        autoClose: 2500,
-        icon: <IconCheck />,
-        color: 'green',
-      })
-      setDeleteLoading(false)
+      Notify('All good!', "Your note was successfully deleted", true)
       navigate("/home")
     }
     catch (err) {
-      console.log("Note delete error", err)
-      notifications.show({
-        withBorder: true,
-        title: 'Oops!, something went wrong',
-        message: err.response.data.error,
-        autoClose: 2500,
-        icon: <IconX />,
-        color: 'red',
-      })
+        Notify('Oops!, something went wrong', err.response.data, false)
+      }
+    finally {
       setDeleteLoading(false)
-
     }
   }
 
