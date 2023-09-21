@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useMantineColorScheme } from '@mantine/core';
 import { Navbar, Center, Tooltip, UnstyledButton, createStyles, Stack, rem, px } from '@mantine/core';
-import { IconHome2, IconMoon, IconFilePlus, IconLogout, IconSunHigh, IconSunglasses } from '@tabler/icons-react';
+import { IconHome2, IconMoon, IconFilePlus, IconLogout, IconSunHigh } from '@tabler/icons-react';
 import { Link } from "react-router-dom"
 import useLogout from "../hooks/useLogout"
 
@@ -67,7 +67,7 @@ export function SIdeBar() {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const dark = colorScheme === 'dark';
 
-  return (
+  return ( 
     <Navbar height={"100vh"} width={{ base: 80 }} p="md" sx={(theme) => ({
       backgroundColor: theme.fn.variant({ variant: 'filled', color: theme.primaryColor })
         .background,

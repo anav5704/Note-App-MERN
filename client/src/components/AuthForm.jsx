@@ -15,13 +15,15 @@ function AuthForm({ type, handleSubmit, loading }) {
             {type === "LogIn" ? "Log In" : "Sign Up"}
           </Text>
         </Title>
-        <Input
+        <Input 
+          name='email'
           size='md'
           placeholder="Your email"
           value={email}
           onChange={(e) => { setEmail(e.target.value) }}
         />
         <PasswordInput
+          name='password'
           size='md'
           placeholder={`${type === "SignUp" ? "New" : ""} Password`}
           value={password}
