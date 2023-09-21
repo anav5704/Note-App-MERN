@@ -1,43 +1,47 @@
+import { Title, SimpleGrid, Container, Loader, Center, Flex } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { Menu, Title, SimpleGrid, Container, Loader, Center, Flex, TextInput, ActionIcon } from "@mantine/core";
-import { IconSearch, IconAdjustmentsHorizontal, IconLayoutGrid, IconArrowUp, IconArrowDown } from '@tabler/icons-react';
 import NoteCard from "../components/NoteCard"
+import NoResults from "../components/NoResults";
+import NoNotes from "../components/NoNotes";
+import SearchFilter from "../components/SearchFilter";
 import axios from "axios";
 import useAuthContext from "../hooks/useAuthContext";
 import useNoteContext from "../hooks/useNoteContext";
+import useNotePreferences from "../hooks/useNotePreferences";
 
 function Home() {
-  const { user } = useAuthContext();
+  const { user, headerConfig: { headers } } = useAuthContext();
   const { notes, dispatch } = useNoteContext()
   const [filterdNotes, setFilterdNotes] = useState([])
   const [searchQuery, setSearchQuery] = useState("")
-  const [sortCriteria, setSortCriteria] = useState(localStorage.getItem("sortCritria") || "updatedAt")
-  const [sortBy, setSortBy] = useState(localStorage.getItem("sortBy") || -1)
-  const [gridLayout, setGridLayout] = useState(localStorage.getItem("gridLayout") && true)
+  const [loading, setLoading] = useState(true)
+  const { handleSortCriteria, sortCriteria, handleSortBy, sortBy, handleLayout, gridLayout } = useNotePreferences()
 
   async function fetchNotes() {
+    setLoading(true)
     try {
-      const response = await axios.get("http://localhost:4000/api/notes", {
-        params: { sortCriteria, sortBy }, headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer: ${user.token}`,
-        }
-      })
+      const response = await axios.get("http://localhost:4000/api/notes", { params: { sortCriteria, sortBy }, headers })
       const notes = await response.data;
+
       dispatch({ type: "SET_NOTES", payload: notes })
-      console.log(notes)
       setFilterdNotes(notes)
-    } catch (err) {
+    }
+    catch (err) {
       console.log("Notes fecth error", err);
+    }
+    finally {
+      setLoading(false)
     }
   }
 
   const handleSearch = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
+
     const filteredNotes = notes.filter((note) =>
       note.title.toLowerCase().includes(query.toLowerCase())
     );
+
     setFilterdNotes(filteredNotes)
   };
 
@@ -47,25 +51,9 @@ function Home() {
     }
   }, [user, dispatch, sortCriteria, sortBy]);
 
-
-  const handleSortCriteria = (criteria) => {
-    setSortCriteria(criteria)
-    localStorage.setItem("sortCritria", criteria)
-  }
-
-  const handleSortBy = (by) => {
-    setSortBy(by)
-    localStorage.setItem("sortBy", by)
-  }
-
-  const handleLayout = (layout) => {
-    setGridLayout(layout)
-    localStorage.setItem("gridLayout", layout === true ? layout : "")
-  }
-
   return (
     <Container m={0} p={20} w="95%" fluid>
-      {!filterdNotes?.length ? (
+      {loading ? (
         <Center h={"100%"} mx="auto">
           <Loader />
         </Center>
@@ -73,54 +61,29 @@ function Home() {
         <>
           <Flex align={"start"} justify={"space-between"}>
             <Title mb={20}>Welcome Back</Title>
-            <Flex align={"center"} gap={"md"}>
-              <TextInput value={searchQuery} onChange={handleSearch} w={300} size="md" placeholder="Search Notes" icon={<IconSearch stroke={1.75} size="1.25em" />} />
-
-              <Menu offset={20} shadow="md" width={150} position="bottom-end">
-                <Menu.Target>
-                  <ActionIcon color="blue" size="xl" variant="filled" >
-                    <IconAdjustmentsHorizontal stroke={1.75} size="1.25em" />
-                  </ActionIcon>
-                </Menu.Target>
-
-                <Menu.Dropdown>
-                  <Menu.Label>Sort</Menu.Label>
-                  <Menu.Divider />
-                  <Menu.Item onClick={() => handleSortCriteria("title")}>Title</Menu.Item>
-                  <Menu.Item onClick={() => handleSortCriteria("createdAt")}>Created</Menu.Item>
-                  <Menu.Item onClick={() => handleSortCriteria("updatedAt")}>Updated</Menu.Item>
-                  <Menu.Divider />
-                  <Flex>
-                    <Menu.Item onClick={() => handleSortBy(1)} p={7}><IconArrowUp width={"100%"} /> </Menu.Item>
-                    <Menu.Item onClick={() => handleSortBy(-1)} p={7}><IconArrowDown width={"100%"} /> </Menu.Item>
-                  </Flex>
-                </Menu.Dropdown>
-              </Menu>
-
-              <Menu offset={20} shadow="md" width={150} position="bottom-end">
-                <Menu.Target>
-                  <ActionIcon color="blue" variant="filled" size="xl"  >
-                    <IconLayoutGrid stroke={1.75} size="1.25em" />
-                  </ActionIcon>
-                </Menu.Target>
-
-                <Menu.Dropdown>
-                  <Menu.Label>Layouts</Menu.Label>
-                  <Menu.Divider />
-                  <Menu.Item onClick={() => handleLayout(true)}>Grid</Menu.Item>
-                  <Menu.Item onClick={() => handleLayout(false)}>List</Menu.Item>
-                </Menu.Dropdown>
-              </Menu>
-
-
-
-            </Flex>
+            <SearchFilter
+              handleSearch={handleSearch}
+              searchQuery={searchQuery}
+              handleSortCriteria={handleSortCriteria}
+              handleSortBy={handleSortBy}
+              handleLayout={handleLayout}
+            />
           </Flex>
-          <SimpleGrid cols={gridLayout ? 4 : 2} spacing="lg">
-            {filterdNotes.map((note, index) => (
-              <NoteCard key={index} note={note} sortCriteria={sortCriteria} gridLayout={gridLayout} />
-            ))}
-          </SimpleGrid>
+          {!notes.length ? (
+            <Center h={"85%"} mx="auto">
+              <NoNotes />
+            </Center>
+          ) : !filterdNotes.length ? (
+            <Center h={"85%"} mx="auto">
+              <NoResults query={searchQuery} />
+            </Center>
+          ) : (
+            <SimpleGrid cols={gridLayout ? 4 : 2} spacing="lg">
+              {filterdNotes.map((note, index) => (
+                <NoteCard key={index} note={note} sortCriteria={sortCriteria} gridLayout={gridLayout} />
+              ))}
+            </SimpleGrid>
+          )}
         </>
       )}
     </Container>

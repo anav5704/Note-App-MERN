@@ -1,4 +1,4 @@
-import { Card, Text, Flex } from '@mantine/core';
+import { Card, Text } from '@mantine/core';
 import { Link } from "react-router-dom"
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 
