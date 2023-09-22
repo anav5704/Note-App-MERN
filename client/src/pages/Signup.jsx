@@ -1,8 +1,8 @@
-import useSignup from '../hooks/useSignup';
+import useUserController from '../hooks/useUserController';
 import AuthForm from '../components/AuthForm';
 
 function Signup() {
-  const { signup, loading } = useSignup()
+  const { signup, loading } = useUserController()
 
   const handleSignup = async (email, password) => {
     await signup(email, password)

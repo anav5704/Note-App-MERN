@@ -9,7 +9,7 @@ import Highlight from '@tiptap/extension-highlight';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
-import useFetch from '../hooks/useFetch';
+import useNoteController from '../hooks/useNoteController';
 
 
 const TextEditor = ({ type, loading, deleteLoading, handleSubmit, handleDelete }) => {
@@ -18,7 +18,7 @@ const TextEditor = ({ type, loading, deleteLoading, handleSubmit, handleDelete }
   const { dispatch } = useNoteContext()
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
-  const { fetchNote } = useFetch()
+  const { getOneNote } = useNoteController()
 
   const editor = useEditor({
     extensions: [
@@ -32,7 +32,7 @@ const TextEditor = ({ type, loading, deleteLoading, handleSubmit, handleDelete }
 
   useEffect(() => {
     if (user && type === "Update") {
-      fetchNote(id, setTitle, setContent, editor)
+      getOneNote(id, setTitle, setContent, editor)
     }
   }, [dispatch, user, editor])
 

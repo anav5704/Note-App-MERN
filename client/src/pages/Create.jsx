@@ -1,9 +1,9 @@
 import { Container } from '@mantine/core';
 import TextEditor from '../components/TextEditor';
-import useCreate from '../hooks/useCreate';
+import useNoteController from '../hooks/useNoteController';
 
 const Create = () => {
-  const { createNote, loading } = useCreate()
+  const { createNote, loading } = useNoteController()
 
   async function handleCreate(title, content) {
     await createNote(title, content)

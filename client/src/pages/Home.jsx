@@ -1,38 +1,21 @@
 import { Title, SimpleGrid, Container, Loader, Center, Flex } from "@mantine/core";
 import { useEffect, useState } from "react";
-import NoteCard from "../components/NoteCard"
+import NoteCard from "../components/NoteCard";
 import NoResults from "../components/NoResults";
 import NoNotes from "../components/NoNotes";
 import SearchFilter from "../components/SearchFilter";
-import axios from "axios";
+import useNoteController from "../hooks/useNoteController";
 import useAuthContext from "../hooks/useAuthContext";
 import useNoteContext from "../hooks/useNoteContext";
 import useNotePreferences from "../hooks/useNotePreferences";
 
 function Home() {
-  const { user, headerConfig: { headers } } = useAuthContext();
-  const { notes, dispatch } = useNoteContext()
-  const [filterdNotes, setFilterdNotes] = useState([])
-  const [searchQuery, setSearchQuery] = useState("")
-  const [loading, setLoading] = useState(true)
-  const { handleSortCriteria, sortCriteria, handleSortBy, sortBy, handleLayout, gridLayout } = useNotePreferences()
-
-  async function fetchNotes() {
-    setLoading(true)
-    try {
-      const response = await axios.get("http://localhost:4000/api/notes", { params: { sortCriteria, sortBy }, headers })
-      const notes = await response.data;
-
-      dispatch({ type: "SET_NOTES", payload: notes })
-      setFilterdNotes(notes)
-    }
-    catch (err) {
-      console.log("Notes fecth error", err);
-    }
-    finally {
-      setLoading(false)
-    }
-  }
+  const { user } = useAuthContext();
+  const { notes, dispatch } = useNoteContext();
+  const [filterdNotes, setFilterdNotes] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const { getAllNotes, dataloading } = useNoteController();
+  const { handleSortCriteria, sortCriteria, handleSortBy, sortBy, handleLayout, gridLayout } = useNotePreferences();
 
   const handleSearch = (e) => {
     const query = e.target.value;
@@ -42,18 +25,16 @@ function Home() {
       note.title.toLowerCase().includes(query.toLowerCase())
     );
 
-    setFilterdNotes(filteredNotes)
+    setFilterdNotes(filteredNotes);
   };
 
   useEffect(() => {
-    if (user) {
-      fetchNotes()
-    }
+    getAllNotes(sortCriteria, sortBy).then((notes) => setFilterdNotes(notes))
   }, [user, dispatch, sortCriteria, sortBy]);
 
   return (
     <Container m={0} p={20} w="95%" fluid>
-      {loading ? (
+      {dataloading ? (
         <Center h={"100%"} mx="auto">
           <Loader />
         </Center>
@@ -80,7 +61,8 @@ function Home() {
           ) : (
             <SimpleGrid cols={gridLayout ? 4 : 2} spacing="lg">
               {filterdNotes.map((note, index) => (
-                <NoteCard key={index} note={note} sortCriteria={sortCriteria} gridLayout={gridLayout} />
+                <NoteCard key={index} note={note} sortCriteria={sortCriteria} gridLayout={gridLayout}
+                />
               ))}
             </SimpleGrid>
           )}

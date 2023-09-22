@@ -3,7 +3,7 @@ import { useMantineColorScheme } from '@mantine/core';
 import { Navbar, Center, Tooltip, UnstyledButton, createStyles, Stack, rem, px } from '@mantine/core';
 import { IconHome2, IconMoon, IconFilePlus, IconLogout, IconSunHigh } from '@tabler/icons-react';
 import { Link } from "react-router-dom"
-import useLogout from "../hooks/useLogout"
+import useUserController from '../hooks/useUserController';
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -58,7 +58,7 @@ export function SIdeBar() {
     </Link>
   ));
 
-  const { logout } = useLogout()
+  const { logout } = useUserController()
 
   function handleSumbit() {
     logout()
