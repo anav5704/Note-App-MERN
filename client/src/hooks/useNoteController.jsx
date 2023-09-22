@@ -19,7 +19,7 @@ function useNoteController() {
     setDataLoading(true)
 
     try {
-      const response = await axios.get("http://localhost:4000/api/notes", { params: { sortCriteria, sortBy }, headers })
+      const response = await axios.get("https://digidiary.onrender.com/api/notes", { params: { sortCriteria, sortBy }, headers })
       const notes = await response.data;
 
       dispatch({ type: "SET_NOTES", payload: notes })
@@ -37,7 +37,7 @@ function useNoteController() {
 
   const getOneNote = async (id, setTitle, setContent, editor) => {
     try {
-      const response = await axios.get(`http://localhost:4000/api/notes/${id}`, headerConfig)
+      const response = await axios.get(`https://digidiary.onrender.com/api/notes/${id}`, headerConfig)
       const json = await response.data
 
       setTitle(json.title)
@@ -53,7 +53,7 @@ function useNoteController() {
     setLoading(true)
     
     try {
-      const response = await axios.post("http://localhost:4000/api/notes/create", { title, content }, headerConfig)
+      const response = await axios.post("https://digidiary.onrender.com/api/notes/create", { title, content }, headerConfig)
       const json = await response.data
 
       dispatch({ type: "CREATE_NOTE", payload: json })
@@ -72,7 +72,7 @@ function useNoteController() {
     setLoading(true)
 
     try {
-      const response = await axios.put(`http://localhost:4000/api/notes/${id}`, { title, content }, headerConfig)
+      const response = await axios.put(`https://digidiary.onrender.com/api/notes/${id}`, { title, content }, headerConfig)
       const json = await response.data
 
       dispatch({ type: "UPDATE_NOTE", payload: json })
@@ -92,7 +92,7 @@ function useNoteController() {
     setDeleteLoading(true)
 
     try {
-      const response = await axios.delete(`http://localhost:4000/api/notes/${id}`, headerConfig)
+      const response = await axios.delete(`https://digidiary.onrender.com/api/notes/${id}`, headerConfig)
       const json = await response.data
 
       dispatch({ type: 'DELETE_NOTE', payload: json })
