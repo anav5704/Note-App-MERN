@@ -13,7 +13,7 @@ const checkMissingFields = (req) => {
     }
 }
 
-async function getAllNotes(req, res) {
+const getAllNotes = async (req, res) => {
     const { sortCriteria, sortBy } = req.query
     let sort = {}
 
@@ -42,7 +42,7 @@ async function getAllNotes(req, res) {
     }
 }
 
-async function getOneNote(req, res) {
+const getOneNote = async (req, res) => {
     try {
         const { id } = await req.params
         if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -61,7 +61,7 @@ async function getOneNote(req, res) {
     }
 }
 
-async function createNote(req, res) {
+const createNote = async (req, res) => {
     const { title, content } = req.body
     try {
         checkMissingFields(req)
@@ -74,7 +74,7 @@ async function createNote(req, res) {
     }
 }
 
-async function updateNote(req, res) {
+const updateNote = async (req, res) => {
     try {
         checkMissingFields(req)
         const { id } = await req.params
@@ -98,7 +98,7 @@ async function updateNote(req, res) {
 }
 
 
-async function deleteNote(req, res) {
+const deleteNote = async (req, res) => {
     try {
         const { id } = await req.params
         if (!mongoose.Types.ObjectId.isValid(id)) {
