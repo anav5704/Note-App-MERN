@@ -82,7 +82,7 @@ MONGO= // your mongo URI with password goes here
 SECRET= // your secret key goes here 
 ```
 
-# Important!
+## Important!
 The backend routes for the Express app are hard coded in the client/src/hooks/controllers/useNoteController file for all 6 controllers, please change it to your own backend routes.
 
 ```
