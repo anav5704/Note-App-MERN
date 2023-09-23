@@ -31,12 +31,12 @@ DigiDiary is a beautiful and user fiendly note taking app I made while I was lea
 As with most other MERN Stack apps, DigiDiary uses a MVC architecture, which is an acronym for Model-View-Controller. As the name suggests, the system is broken into 3 main components that are highly dependent on each other. From my understanding, I'm guessing this is very good as development would be faster because there could be 3 teams working simultaniously on a project.
 
 ## Models
-The Model part of MVC deals with data logic and business logic. The data logic is the storing, retrieving and manipulating of data from a database, MongoDB in this case. On the other hand, business logic refers to how this data is processed. The model acts as a link between controller and database as the controllers can't direclty interact with the database itself. Mongoose is used to do all of this. Here is what the user and note models look like and thier association:
+The Model part of MVC deals with data logic and business logic. The data logic is the storing, retrieving and manipulating of data from a database, MongoDB in this case. On the other hand, business logic refers to how this data is processed. The model acts as a link between controller and database as the controllers can't directly interact with the database itself. Mongoose is used to do all of this. Here is what the user and note models look like and thier association:
 
 ![Class Diagram](https://github.com/anav5704/Note-App-MERN/blob/main/client/public/docs/classDiagram.png)
 
 ## Views
-The view part handles the UI logic and generates UI components for the user based on the data collected by the model. This data is onbtained from the controller and not the model itself. Some of the main views for this app are the home page(where all the created notes are displayed) and the edit page, where(the note data is displayed).
+The view part handles the UI logic and generates UI components for the user based on the data collected by the model. This data is obtained from the controller and not the model itself. Some of the main views for this app are the home page(where all the created notes are displayed) and the edit page, where(the note data is displayed).
 Feel free to check out the final version if you want to have a look.
 
 ## Controllers
@@ -71,7 +71,7 @@ Node JS v18.17.0+
 ```
 
 ## Initialise Project
-Firstly, fork this repository and then clone it onto your machine. Then, cd into the client folder and run npm intstall. then cd out to the root folder and cd into the server folder and run npm intstall again. After setting up the environment and adding your backend routes, run npm start to run the app.
+Firstly, fork this repository and then clone it onto your machine. Then, cd into the client folder and run npm intstall. then cd out to the root folder and cd into the server folder and run npm install again. After setting up the environment and adding your backend routes, run npm start to run the app.
 
 ## Environment Variables
 Create a .env file in the root of the server folder and add the environment variables for your mongoDB URI (endpoint), JWT secret and Express JS localhost port:
