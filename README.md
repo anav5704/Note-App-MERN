@@ -90,4 +90,4 @@ const response = await axios.get("https://digidiary.onrender.com/api/notes") // 
 ```
 
 # Acknowledgments
-Special thanks to Aaryan, Danvil, Ilisoni, Indeevar, Mesake, Rudr, Veer and Vetaia(I am nothing without my boys).
+Special thanks to Aaryan, Danvil, Ilisoni, Indeevar, Mesake, Rudr, Veer and Vetaia (I am nothing without my boys).
