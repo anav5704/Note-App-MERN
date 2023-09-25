@@ -23,7 +23,7 @@ DigiDiary is a beautiful and user fiendly note taking app I made while I was lea
 - Markdown - Markup for this documentation
 
 # Hosting
-**Frontend React App** - This was deployed on Netlify. I've been using their free plan for a year now and it gets the job done. Netlify also rebuilds the site everytime a new commit to this repository is made.
+**Frontend React App** - This was deployed on Netlify. I've been using their free plan for a year now and it gets the job done. Netlify also rebuilds the site everytime a new commit to this repository is made. [Check it out!](https://digidiary.netlify.app/)
 
 **Backend Express App** - his was deployed on Render. This was my first time using Render and it seems to work well. The backend app does spin down after 15 minutes of inactivity but you can't ask for more from a free plan.
 
