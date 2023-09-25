@@ -116,7 +116,7 @@ function Hero() {
             <Tooltip label="Tuna" withArrow color="gray" position="bottom">
               <Avatar src="/images/sake.jpg" radius="xl" />
             </Tooltip>
-            <Tooltip label="Baddie w Booty" withArrow color="gray" position="bottom">
+            <Tooltip label="Bear" withArrow color="gray" position="bottom">
               <Avatar src="/images/rohan.jpg" radius="xl" />
             </Tooltip>
             <Tooltip label="Deaf" withArrow color="gray" position="bottom">
