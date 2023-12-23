@@ -88,5 +88,11 @@ const response = await axios.get("https://digidiary.onrender.com/api/notes") // 
 
 After setting up the environment and adding your backend routes, run ```npm start``` to run the app.
 
+## earning Rsources
+
+- [MERN stack full tutorial and project](https://www.youtube.com/watch?v=CvCiNeLnZ00)
+- [MVC pattern explained in Noode JS](https://www.youtube.com/watch?v=bQuBlR0T5cc)
+- [MongoDB in 100 seconds](https://www.youtube.com/watch?v=-bt_y4Loofg)
+
 ## Acknowledgments
 Special thanks to Aaryan, Danvil, Ilisoni, Indeevar, Mesake, Rohan, Veer and Vetaia (I am nothing without my boys).
