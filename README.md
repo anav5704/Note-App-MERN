@@ -4,7 +4,7 @@
 
 > The website was made by a blind person, that's why it's special; Just like him - Veer
 
-DigiDiary is a beautiful and user-friendly note-taking app I made while I was learning the MERN stack (MongoDB, Express JS, React JS, Node JS). Development time was almost 1 month: started on the 28th of August, 2023, and ended on the 23rd of September, 2023. This was also my first time using a component library and I chose Mantine as it fit my style. I still prefer using plain TailwindCSS with HeroIcons.
+This is a simple and user-friendly note-taking app I made while I was learning the MERN stack (MongoDB, Express JS, React JS, Node JS). Development time was almost 1 month: started on the 28th of August, 2023, and ended on the 23rd of September, 2023. This was also my first time using a component library and I chose Mantine as it fit my style. I still prefer using plain TailwindCSS with HeroIcons.
 
 ## Technologies Used
 - React JS 
@@ -27,7 +27,7 @@ DigiDiary is a beautiful and user-friendly note-taking app I made while I was le
 As with most other MERN Stack apps, DigiDiary uses a MVC architecture, which is an acronym for Model-View-Controller. As the name suggests, the system is broken into 3 main components that are highly dependent on each other. From my understanding, I'm guessing this is very good as development would be faster because there could be 3 teams working simultaneously on a project.
 
 <details>
-<summary>Modelsl</summary>
+<summary>Models</summary>
 
 The Model part of MVC deals with data logic and business logic. The data logic is the storing, retrieving, and manipulating of data from a database, MongoDB in this case. On the other hand, business logic refers to how this data is processed. The model acts as a link between the controller and the database as the controllers can't directly interact with the database itself. Mongoose is used to do all of this. Here is what the user and note models look like and thier association:
 
@@ -71,7 +71,8 @@ This app has a controller for each of the primary interactions bwtween the user 
 </details>
 
 ## Getting Started
-Firstly, fork this repository and then clone it onto your machine. Then, cd into the client folder and run ````npm intstall```. then cd out to the root folder and cd into the server folder and run ```npm install``` again. Create a ```.env``` file in the root of the server folder and add the environment variables:
+
+Firstly, fork this repository and then clone it onto your machine. Then, cd into the client folder and run ```npm intstall```. Now cd out to the root folder and cd into the server folder and run ```npm install``` again. Create a ```.env``` file in the root of the server folder and add the environment variables:
 
 ```
 PORT=4000 // feel free to change this to whatever you want
@@ -79,15 +80,13 @@ MONGO= // your mongo URI with password goes here
 SECRET= // your secret key goes here 
 ```
 
-After setting up the environment and adding your backend routes, run ```npm start``` to run the app.
-
-
-## Important!
-The backend routes for the Express app are hardcoded in the client/src/hooks/controllers/useNoteController file for all 6 controllers, please change it to your own backend routes.
+The backend routes for the Express app are hardcoded in the ```client/src/hooks/controllers/useNoteController``` file for all 6 controllers, change it to your own backend routes.
 
 ```
 const response = await axios.get("https://digidiary.onrender.com/api/notes") // change these links
 ```
+
+After setting up the environment and adding your backend routes, run ```npm start``` to run the app.
 
 ## Acknowledgments
 Special thanks to Aaryan, Danvil, Ilisoni, Indeevar, Mesake, Rohan, Veer and Vetaia (I am nothing without my boys).
