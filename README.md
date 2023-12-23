@@ -72,7 +72,7 @@ This app has a controller for each of the primary interactions between the user 
 
 ## Getting Started
 
-Firstly, fork this repository and then clone it onto your machine. Then, cd into the client folder and run ```npm install ``. Now cd out to the root folder and cd into the server folder and run ```npm install``` again. Create a ```.env``` file in the root of the server folder and add the environment variables:
+Firstly, fork this repository and then clone it onto your machine. Then, cd into the client folder and run ```npm install ```. Now cd out to the root folder and cd into the server folder and run ```npm install``` again. Create a ```.env``` file in the root of the server folder and add the environment variables:
 
 ```
 PORT=4000  
@@ -91,7 +91,7 @@ After setting up the environment and adding your backend routes, run ```npm star
 ## Acknowledgments
 Special thanks to Aaryan, Danvil, Ilisoni, Indeevar, Mesake, Rohan, Veer, and Vetaia (I am nothing without my boys).
 
-## Earning Resources
+## Learning Resources
 
 - [MERN stack full tutorial and project](https://www.youtube.com/watch?v=CvCiNeLnZ00)
 - [MVC pattern explained in Node JS](https://www.youtube.com/watch?v=bQuBlR0T5cc)
